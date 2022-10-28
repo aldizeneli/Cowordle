@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class Controller implements Initializable {
+public class ServerController implements Initializable {
     @FXML
     private Button button_send;
     @FXML
@@ -34,7 +34,7 @@ public class Controller implements Initializable {
     private ScrollPane sp_main;
     private Server server;
 
-    public Controller() {
+    public ServerController() {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,13 +47,13 @@ public class Controller implements Initializable {
 
         this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
-                Controller.this.sp_main.setVvalue((Double)newVal);
+                ServerController.this.sp_main.setVvalue((Double)newVal);
             }
         });
         this.server.receiveMessageFromClient(this.vbox_messages);
         this.button_send.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
-                String messageToSend = Controller.this.tf_message.getText();
+                String messageToSend = ServerController.this.tf_message.getText();
                 if (!messageToSend.isEmpty()) {
                     HBox hBox = new HBox();
                     hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -64,9 +64,9 @@ public class Controller implements Initializable {
                     textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
                     text.setFill(Color.color(0.934, 0.945, 0.996));
                     hBox.getChildren().add(textFlow);
-                    Controller.this.vbox_messages.getChildren().add(hBox);
-                    Controller.this.server.sendMessageToClient(messageToSend);
-                    Controller.this.tf_message.clear();
+                    ServerController.this.vbox_messages.getChildren().add(hBox);
+                    ServerController.this.server.sendMessageToClient(messageToSend);
+                    ServerController.this.tf_message.clear();
                 }
 
             }

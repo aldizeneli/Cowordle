@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="ap_main" fx:controller="app.briscola.server.Controller"
+<AnchorPane fx:id="ap_main" fx:controller="app.briscola.server.ServerController"
             prefHeight="396" prefWidth="478"
             xmlns:fx="http://javafx.com/fxml">
     <children>
@@ -20,7 +20,7 @@
             </content>
         </ScrollPane>
         <Label layoutX="184" layoutY="26"
-               text="Messenger">
+               text="Server">
             <font>
                 <Font name="Arial Rounded NT Bold" size="23"></Font>
             </font>

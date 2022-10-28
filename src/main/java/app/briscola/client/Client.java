@@ -47,7 +47,7 @@ public class Client {
                     if (Client.this.socket.isConnected()) {
                         try {
                             String messageFromServer = Client.this.bufferedReader.readLine();
-                            HelloController.addLabel(messageFromServer, vBox);
+                            ClientController.addLabel(messageFromServer, vBox);
                             continue;
                         } catch (IOException var2) {
                             var2.printStackTrace();

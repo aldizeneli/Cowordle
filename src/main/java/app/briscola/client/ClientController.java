@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class HelloController implements Initializable {
+public class ClientController implements Initializable {
     @FXML
     private Button button_send;
     @FXML
@@ -35,7 +35,7 @@ public class HelloController implements Initializable {
     private ScrollPane sp_main;
     private Client client;
 
-    public HelloController() {
+    public ClientController() {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,13 +48,13 @@ public class HelloController implements Initializable {
 
         this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
-                HelloController.this.sp_main.setVvalue((Double)newVal);
+                ClientController.this.sp_main.setVvalue((Double)newVal);
             }
         });
         this.client.receiveMessageFromServer(this.vbox_messages);
         this.button_send.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
-                String messageToSend = HelloController.this.tf_message.getText();
+                String messageToSend = ClientController.this.tf_message.getText();
                 if (!messageToSend.isEmpty()) {
                     HBox hBox = new HBox();
                     hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -65,9 +65,9 @@ public class HelloController implements Initializable {
                     textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
                     text.setFill(Color.color(0.934, 0.945, 0.996));
                     hBox.getChildren().add(textFlow);
-                    HelloController.this.vbox_messages.getChildren().add(hBox);
-                    HelloController.this.client.sendMessageToServer(messageToSend);
-                    HelloController.this.tf_message.clear();
+                    ClientController.this.vbox_messages.getChildren().add(hBox);
+                    ClientController.this.client.sendMessageToServer(messageToSend);
+                    ClientController.this.tf_message.clear();
                 }
 
             }

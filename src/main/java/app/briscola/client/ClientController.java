@@ -42,19 +42,19 @@ public class ClientController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        try {
-//            Scanner scanner = new Scanner(System.in);
-//            System.out.println("Enter your username for the game: ");
-//            String username = scanner.nextLine();
-//            Socket socket = new Socket("localhost", 1234);
-//            Client client = new Client(socket, username);
-//
-//            //avvio i thread (sarebbero operazioni bloccanti altrimenti)
-//            client.listenForMessage();
-//            client.sendMessage();
-//        }  catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter your username for the game: ");
+            String username = scanner.nextLine();
+            Socket socket = new Socket("localhost", 1234);
+            Client client = new Client(socket, username);
+
+            //avvio i thread (sarebbero operazioni bloccanti altrimenti)
+            client.listenForMessage();
+            client.sendMessage();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
 //        try {
 //            this.client = new Client(new Socket("localhost", 1234));
 //            System.out.println("Connected to server");

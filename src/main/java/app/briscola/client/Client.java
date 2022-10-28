@@ -33,28 +33,33 @@ public class Client {
     }
 
     public void sendMessage() {
-        try {
-            Gson gson = new Gson();
-            //mando il nome come primo messaggio e poi in loop mando ogni volta che client scrive
-            bufferedWriter.write(username);
-            bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
-            bufferedWriter.flush();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Gson gson = new Gson();
+                    //mando il nome come primo messaggio e poi in loop mando ogni volta che client scrive
+                    bufferedWriter.write(username);
+                    bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
+                    bufferedWriter.flush();
 
-            Scanner scanner = new Scanner(System.in); //per leggere input da console
-            while(socket.isConnected()) {
-                String inputText = scanner.nextLine();
+                    Scanner scanner = new Scanner(System.in); //per leggere input da console
+                    while(socket.isConnected()) {
+                        String inputText = scanner.nextLine();
 
-                Message messageObject = new Message(inputText, username);
-                String message = gson.toJson(messageObject);
-                System.out.println(message);
+                        Message messageObject = new Message(inputText, username);
+                        String message = gson.toJson(messageObject);
+                        System.out.println(message);
 
-                bufferedWriter.write(message);
-                bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
-                bufferedWriter.flush();
+                        bufferedWriter.write(message);
+                        bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
+                        bufferedWriter.flush();
+                    }
+                } catch(IOException e) {
+                    closeEverything(socket, bufferedReader, bufferedWriter);
+                }
             }
-        } catch(IOException e) {
-            closeEverything(socket, bufferedReader, bufferedWriter);
-        }
+        }).start();
     }
 
     public void listenForMessage() {

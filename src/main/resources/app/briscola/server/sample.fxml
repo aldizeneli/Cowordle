@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="ap_main" fx:controller="app.briscola.server.Controller"
+            prefHeight="396" prefWidth="478"
+            xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <Button fx:id="button_send" layoutX="404" layoutY="330" text="Send"/>
+        <TextField fx:id="tf_message" layoutX="30" layoutY="328"
+                   prefWidth="361" prefHeight="26" />
+        <ScrollPane fx:id="sp_main" layoutY="70" layoutX="30"
+                    prefHeight="256" prefWidth="418" fitToWidth="true">
+            <content>
+                <VBox fx:id="vbox_messages" prefHeight="248" prefWidth="412" />
+            </content>
+        </ScrollPane>
+        <Label layoutX="184" layoutY="26"
+               text="Messenger">
+            <font>
+                <Font name="Arial Rounded NT Bold" size="23"></Font>
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

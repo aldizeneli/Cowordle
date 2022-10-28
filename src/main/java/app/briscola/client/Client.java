@@ -7,77 +7,95 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Scanner;
+
+import app.briscola.utility.Message;
+import com.google.gson.Gson;
 import javafx.scene.layout.VBox;
 
 public class Client {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    private String username;
+    private boolean isMyTurn;
 
-    public Client(Socket socket) {
+    public Client(Socket socket, String username) {
         try {
             this.socket = socket;
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        } catch (IOException var3) {
-            System.out.print("Error creating client.");
-            var3.printStackTrace();
-            this.closeEveryThing(socket, this.bufferedReader, this.bufferedWriter);
-        }
+            this.bufferedWriter = new BufferedWriter (new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedReader = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+            this.username = username;
 
+        } catch(IOException e) {
+            closeEverything(socket, bufferedReader, bufferedWriter);
+        }
     }
 
-    public void sendMessageToServer(String messageToServer) {
+    public void sendMessage() {
         try {
-            this.bufferedWriter.write(messageToServer);
-            this.bufferedWriter.newLine();
-            this.bufferedWriter.flush();
-        } catch (IOException var3) {
-            var3.printStackTrace();
-            System.out.println("Error sending message to server");
-            this.closeEveryThing(this.socket, this.bufferedReader, this.bufferedWriter);
-        }
+            Gson gson = new Gson();
+            //mando il nome come primo messaggio e poi in loop mando ogni volta che client scrive
+            bufferedWriter.write(username);
+            bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
+            bufferedWriter.flush();
 
+            Scanner scanner = new Scanner(System.in); //per leggere input da console
+            while(socket.isConnected()) {
+                String inputText = scanner.nextLine();
+
+                Message messageObject = new Message(inputText, username);
+                String message = gson.toJson(messageObject);
+                System.out.println(message);
+
+                bufferedWriter.write(message);
+                bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
+                bufferedWriter.flush();
+            }
+        } catch(IOException e) {
+            closeEverything(socket, bufferedReader, bufferedWriter);
+        }
     }
 
-    public void receiveMessageFromServer(final VBox vBox) {
-        (new Thread(new Runnable() {
+    public void listenForMessage() {
+        new Thread(new Runnable() {
+            @Override
             public void run() {
-                while(true) {
-                    if (Client.this.socket.isConnected()) {
-                        try {
-                            String messageFromServer = Client.this.bufferedReader.readLine();
-                            ClientController.addLabel(messageFromServer, vBox);
-                            continue;
-                        } catch (IOException var2) {
-                            var2.printStackTrace();
-                            System.out.println("Error receiving message from server");
-                            Client.this.closeEveryThing(Client.this.socket, Client.this.bufferedReader, Client.this.bufferedWriter);
-                        }
-                    }
+                String msgFromGroupChat;
 
-                    return;
+                while(socket.isConnected()) {
+                    try {
+                        msgFromGroupChat = bufferedReader.readLine();
+                        System.out.println(msgFromGroupChat);
+
+                        if(msgFromGroupChat.equals("GO:"+username)) {
+                            System.out.println("è il mio turno!");
+                            isMyTurn = true;
+                        }
+
+                    } catch(IOException e) {
+                        closeEverything(socket, bufferedReader, bufferedWriter);
+                    }
                 }
             }
-        })).start();
+        }).start();
     }
 
-    public void closeEveryThing(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+
+    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         try {
-            if (bufferedReader != null) {
+            if(bufferedReader != null) {
                 bufferedReader.close();
             }
-
-            if (bufferedWriter != null) {
+            if(bufferedWriter != null) {
                 bufferedWriter.close();
             }
-
-            if (socket != null) {
+            if(socket != null) {
                 socket.close();
             }
-        } catch (IOException var5) {
-            var5.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
         }
-
     }
+
 }

@@ -38,43 +38,38 @@ public class ServerController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            this.server = new Server(new ServerSocket(1234));
-        } catch (IOException var4) {
-            var4.printStackTrace();
-            System.out.println("Error creating the server");
-        }
 
-        this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
-                ServerController.this.sp_main.setVvalue((Double)newVal);
-            }
-        });
-        this.server.receiveMessageFromClient(this.vbox_messages);
-        this.button_send.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent actionEvent) {
-                String messageToSend = ServerController.this.tf_message.getText();
-                if (!messageToSend.isEmpty()) {
-                    HBox hBox = new HBox();
-                    hBox.setAlignment(Pos.CENTER_RIGHT);
-                    hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
-                    Text text = new Text(messageToSend);
-                    TextFlow textFlow = new TextFlow(new Node[]{text});
-                    textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: rgb(15, 125, 242); -fx-background-radius: 20px;");
-                    textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
-                    text.setFill(Color.color(0.934, 0.945, 0.996));
-                    hBox.getChildren().add(textFlow);
-                    ServerController.this.vbox_messages.getChildren().add(hBox);
-                    ServerController.this.server.sendMessageToClient(messageToSend);
-                    ServerController.this.tf_message.clear();
-                }
 
-            }
-        });
+//        this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+//                ServerController.this.sp_main.setVvalue((Double)newVal);
+//            }
+//        });
+//        this.server.receiveMessageFromClient(this.vbox_messages);
+//        this.button_send.setOnAction(new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent actionEvent) {
+//                String messageToSend = ServerController.this.tf_message.getText();
+//                if (!messageToSend.isEmpty()) {
+//                    HBox hBox = new HBox();
+//                    hBox.setAlignment(Pos.CENTER_RIGHT);
+//                    hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
+//                    Text text = new Text(messageToSend);
+//                    TextFlow textFlow = new TextFlow(new Node[]{text});
+//                    textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: rgb(15, 125, 242); -fx-background-radius: 20px;");
+//                    textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
+//                    text.setFill(Color.color(0.934, 0.945, 0.996));
+//                    hBox.getChildren().add(textFlow);
+//                    ServerController.this.vbox_messages.getChildren().add(hBox);
+//                    ServerController.this.server.sendMessageToClient(messageToSend);
+//                    ServerController.this.tf_message.clear();
+//                }
+//
+//            }
+//        });
     }
 
-    public static void addLabel(String messageFromClient, final VBox vbox) {
-        final HBox hBox = new HBox();
+    public static void addLabel(String messageFromClient, VBox vbox) {
+        HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
         Text text = new Text(messageFromClient);

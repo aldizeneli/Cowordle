@@ -2,6 +2,8 @@ package app.briscola.client;
 
 
 import java.io.IOException;
+import java.net.Socket;
+import java.util.Scanner;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,5 +24,7 @@ public class ClientApplication extends javafx.application.Application {
 
     public static void main(String[] args) {
         launch(new String[0]);
+
+
     }
 }

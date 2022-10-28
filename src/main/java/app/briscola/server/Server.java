@@ -8,79 +8,113 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+
+import app.briscola.utility.Message;
 import javafx.scene.layout.VBox;
 
 public class Server {
     private ServerSocket serverSocket;
-    private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
+    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+    private String currentTurnUsername;
+    private int currentTurnUserIndex;
 
     public Server(ServerSocket serverSocket) {
-        try {
-            this.serverSocket = serverSocket;
-            this.socket = serverSocket.accept();
-            this.bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-        } catch (IOException var3) {
-            System.out.print("Error creating server.");
-            var3.printStackTrace();
-            this.closeEveryThing(this.socket, this.bufferedReader, this.bufferedWriter);
-        }
 
+        this.serverSocket = serverSocket;
     }
 
-    public void sendMessageToClient(String messageToClient) {
+    public void startServer() {
         try {
-            this.bufferedWriter.write(messageToClient);
-            this.bufferedWriter.newLine();
-            this.bufferedWriter.flush();
-        } catch (IOException var3) {
-            var3.printStackTrace();
-            System.out.println("Error sending message to client");
-            this.closeEveryThing(this.socket, this.bufferedReader, this.bufferedWriter);
-        }
+            System.out.println("Server avviato...");
+            int numOfClients = 0;
 
+            while(!serverSocket.isClosed() && numOfClients < 2) {
+                Socket socket = serverSocket.accept();
+                System.out.println("A new client has connected");
+                ClientHandler clientHandler = new ClientHandler(socket);
+                clientHandlers.add(clientHandler);
+
+//				Thread thread = new Thread(clientHandler);
+//				thread.start();
+
+                listenForMessage(clientHandler);
+                numOfClients++;
+
+                broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + numOfClients);
+            }
+
+            System.out.println("All ready, starting game...");
+            broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo");
+
+            currentTurnUserIndex = 0;
+            currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
+            broadcastMessage("GO:" + currentTurnUsername);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void receiveMessageFromClient(final VBox vBox) {
-        (new Thread(new Runnable() {
+    public void listenForMessage(ClientHandler clientHandler) {
+        new Thread(new Runnable() {
+            @Override
             public void run() {
-                while(true) {
-                    if (Server.this.socket.isConnected()) {
-                        try {
-                            String messageFromClient = Server.this.bufferedReader.readLine();
-                            ServerController.addLabel(messageFromClient, vBox);
-                            continue;
-                        } catch (IOException var2) {
-                            var2.printStackTrace();
-                            System.out.println("Error receiving message from client");
-                            Server.this.closeEveryThing(Server.this.socket, Server.this.bufferedReader, Server.this.bufferedWriter);
+                String msgFromClient;
+                Gson gson = new Gson();
+                while(clientHandler.socket.isConnected()) {
+                    try {
+                        msgFromClient = clientHandler.bufferedReader.readLine();
+
+                        Message message = gson.fromJson(msgFromClient, Message.class);
+
+                        if(message.username.equals(currentTurnUsername)) {
+                            System.out.println(message.message + " " + message.username);
+
+                            currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
+                            currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
                         }
+                        else
+                            System.out.println("messaggio rifiutato");
+
+                        broadcastMessage("GO:" + currentTurnUsername);
+
+                    } catch(IOException e) {
+
                     }
-
-                    return;
                 }
+                //todo: make it work (implement a heartbeat system)
+                System.out.println("A user disconnected");
             }
-        })).start();
+        }).start();
     }
 
-    public void closeEveryThing(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
-        try {
-            if (bufferedReader != null) {
-                bufferedReader.close();
+    public void broadcastMessage(String messageToSend) {
+        Gson gson = new Gson();
+        for(ClientHandler clientHandler : clientHandlers) {
+            try {
+                //per nn mandare il messaggio a me stesso
+//				if(!clientHandler.clientUsername.equals("test")) {
+                clientHandler.bufferedWriter.write(messageToSend);
+                clientHandler.bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
+                clientHandler.bufferedWriter.flush();
+//				}
+            } catch(IOException e) {
+                //closeEverything(socket, bufferedReader, bufferedWriter);
             }
-
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
-            }
-
-            if (socket != null) {
-                socket.close();
-            }
-        } catch (IOException var5) {
-            var5.printStackTrace();
         }
-
     }
+
+    public void closeServerSocket() {
+        try {
+            if(serverSocket != null) {
+                serverSocket.close();
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

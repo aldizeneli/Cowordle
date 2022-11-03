@@ -45,8 +45,14 @@ public class Client {
                     bufferedWriter.flush();
 
                     Scanner scanner = new Scanner(System.in); //per leggere input da console
+
                     while(socket.isConnected()) {
                         String inputText = scanner.nextLine();
+
+                        if(!isMyTurn) {
+                            System.out.println("Is not my turn! i cant send this message to the server");
+                            continue;
+                        }
 
                         Message messageObject = new Message(inputText, username);
                         String message = gson.toJson(messageObject);
@@ -74,13 +80,17 @@ public class Client {
                         msgFromGroupChat = bufferedReader.readLine();
                         System.out.println(msgFromGroupChat);
 
-                        if(msgFromGroupChat.equals("GO:"+username)) {
-                            System.out.println("è il mio turno!");
-                            isMyTurn = true;
-                        }
-
-                        if(msgFromGroupChat.equals("test"+username)) {
-                            controller.test();
+                        if(msgFromGroupChat.startsWith("GO:")) {
+                            if(msgFromGroupChat.equals("GO:"+username)) {
+                                System.out.println("è il mio turno!");
+                                isMyTurn = true;
+                            } else
+                                isMyTurn = false;
+                        } else if(msgFromGroupChat.startsWith("SERVER:")) {
+                            if(msgFromGroupChat.equals("SERVER:TURNEND")) {
+                                //receive new card from server and update ui
+                                //controller.test();
+                            }
                         }
 
                     } catch(IOException e) {
@@ -107,5 +117,4 @@ public class Client {
             e.printStackTrace();
         }
     }
-
 }

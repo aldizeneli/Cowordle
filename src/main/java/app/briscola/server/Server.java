@@ -57,6 +57,8 @@ public class Server {
         currentTurnUserIndex = 0;
         currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
 
+        broadcastMessage("GO:" + currentTurnUsername);
+
         Deck deck = new Deck();
         briscolaCode = deck.getBriscolaCode();
 
@@ -72,7 +74,6 @@ public class Server {
                 while(clientHandler.socket.isConnected()) {
                     try {
                         msgFromClient = clientHandler.bufferedReader.readLine();
-
                         Message message = gson.fromJson(msgFromClient, Message.class);
 
                         if(message.username.equals(currentTurnUsername)) {
@@ -80,6 +81,7 @@ public class Server {
 
                             currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
                             currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
+                            broadcastMessage("GO:" + currentTurnUsername);
                         }
                         else
                             System.out.println("messaggio rifiutato");

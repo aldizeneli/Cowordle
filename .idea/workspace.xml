@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-risolto problema di interfaccia che non partiva dei client, era a causa di  client.sendMessage(); che non era un thread come  client.listenForMessage() ed essendo un operazione blocante necessitava di girare su un suo thread">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Deck.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/briscola/server/cards.json" afterDir="false" />
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/client/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/utility/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666973329772</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco">
+      <created>1667493825411</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667493825411</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -132,6 +133,7 @@
     <MESSAGE value="-rinominato file, tutto funzionante, con struttura file folder definitiva" />
     <MESSAGE value="-importato codice di server e client, ma interfaccia client NON parte (parte se commenti clientController.Initialize())" />
     <MESSAGE value="-risolto problema di interfaccia che non partiva dei client, era a causa di  client.sendMessage(); che non era un thread come  client.listenForMessage() ed essendo un operazione blocante necessitava di girare su un suo thread" />
-    <option name="LAST_COMMIT_MESSAGE" value="-risolto problema di interfaccia che non partiva dei client, era a causa di  client.sendMessage(); che non era un thread come  client.listenForMessage() ed essendo un operazione blocante necessitava di girare su un suo thread" />
+    <MESSAGE value="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco" />
+    <option name="LAST_COMMIT_MESSAGE" value="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco" />
   </component>
 </project>

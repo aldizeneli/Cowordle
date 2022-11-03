@@ -9,9 +9,8 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-import app.briscola.utility.Message;
+import app.briscola.shared.Message;
 import com.google.gson.Gson;
-import javafx.scene.layout.VBox;
 
 public class Client {
     private Socket socket;
@@ -19,13 +18,15 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private String username;
     private boolean isMyTurn;
+    private ClientController controller;
 
-    public Client(Socket socket, String username) {
+    public Client(Socket socket, String username, ClientController controller) {
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter (new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             this.username = username;
+            this.controller = controller;
 
         } catch(IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -76,6 +77,10 @@ public class Client {
                         if(msgFromGroupChat.equals("GO:"+username)) {
                             System.out.println("è il mio turno!");
                             isMyTurn = true;
+                        }
+
+                        if(msgFromGroupChat.equals("test"+username)) {
+                            controller.test();
                         }
 
                     } catch(IOException e) {

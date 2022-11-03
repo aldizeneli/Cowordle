@@ -1,24 +1,22 @@
 package app.briscola.server;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import app.briscola.shared.Deck;
 import com.google.gson.Gson;
 
-import app.briscola.utility.Message;
-import javafx.scene.layout.VBox;
+import app.briscola.shared.Message;
 
 public class Server {
     private ServerSocket serverSocket;
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private String currentTurnUsername;
     private int currentTurnUserIndex;
+    private String briscolaCode;
 
     public Server(ServerSocket serverSocket) {
 
@@ -45,20 +43,27 @@ public class Server {
                 broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + numOfClients);
             }
 
-            System.out.println("All ready, starting game...");
-            broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo");
-
-            currentTurnUserIndex = 0;
-            currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
-            broadcastMessage("GO:" + currentTurnUsername);
-
+            startGame();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void listenForMessage(ClientHandler clientHandler) {
+    private void startGame() {
+        System.out.println("All ready, starting game...");
+        broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo");
+
+        currentTurnUserIndex = 0;
+        currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
+
+        Deck deck = new Deck();
+        briscolaCode = deck.getBriscolaCode();
+
+        System.out.println("briscola: " + briscolaCode);
+    }
+
+    private void listenForMessage(ClientHandler clientHandler) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -79,7 +84,8 @@ public class Server {
                         else
                             System.out.println("messaggio rifiutato");
 
-                        broadcastMessage("GO:" + currentTurnUsername);
+//                        broadcastMessage("GO:" + currentTurnUsername);
+//                        broadcastMessage("test"+currentTurnUsername);
 
                     } catch(IOException e) {
 
@@ -91,7 +97,7 @@ public class Server {
         }).start();
     }
 
-    public void broadcastMessage(String messageToSend) {
+    private void broadcastMessage(String messageToSend) {
         Gson gson = new Gson();
         for(ClientHandler clientHandler : clientHandlers) {
             try {
@@ -107,7 +113,7 @@ public class Server {
         }
     }
 
-    public void closeServerSocket() {
+    private void closeServerSocket() {
         try {
             if(serverSocket != null) {
                 serverSocket.close();
@@ -116,5 +122,4 @@ public class Server {
             e.printStackTrace();
         }
     }
-
 }

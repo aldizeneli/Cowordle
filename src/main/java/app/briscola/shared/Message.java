@@ -1,4 +1,4 @@
-package app.briscola.utility;
+package app.briscola.shared;
 
 public class Message {
     public String message;

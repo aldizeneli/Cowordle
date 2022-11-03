@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "name": "2 denari",
+    "points": 0,
+    "type": "d"
+  },
+  {
+    "id": 2,
+    "name": "3 denari",
+    "points": 10,
+    "type": "d"
+  },
+  {
+    "id": 3,
+    "name": "4 denari",
+    "points": 0,
+    "type": "d"
+  },
+  {
+    "id": 4,
+    "name": "5 denari",
+    "points": 0,
+    "type": "d"
+  },
+  {
+    "id": 5,
+    "name": "6 denari",
+    "points": 0,
+    "type": "d"
+  },
+  {
+    "id": 6,
+    "name": "7 denari",
+    "points": 0,
+    "type": "d"
+  },
+  {
+    "id": 7,
+    "name": "fante denari",
+    "points": 2,
+    "type": "d"
+  },
+  {
+    "id": 8,
+    "name": "cavallo denari",
+    "points": 3,
+    "type": "d"
+  },
+  {
+    "id": 9,
+    "name": "re denari",
+    "points": 4,
+    "type": "d"
+  },
+  {
+    "id": 10,
+    "name": "asso denari",
+    "points": 11,
+    "type": "d"
+  },
+  {
+    "id": 11,
+    "name": "2 coppe",
+    "points": 0,
+    "type": "c"
+  },
+  {
+    "id": 12,
+    "name": "3 coppe",
+    "points": 10,
+    "type": "c"
+  },
+  {
+    "id": 13,
+    "name": "4 coppe",
+    "points": 0,
+    "type": "c"
+  },
+  {
+    "id": 14,
+    "name": "5 coppe",
+    "points": 0,
+    "type": "c"
+  },
+  {
+    "id": 15,
+    "name": "6 coppe",
+    "points": 0,
+    "type": "c"
+  },
+  {
+    "id": 16,
+    "name": "7 coppe",
+    "points": 0,
+    "type": "c"
+  },
+  {
+    "id": 17,
+    "name": "fante coppe",
+    "points": 2,
+    "type": "c"
+  },
+  {
+    "id": 18,
+    "name": "cavallo coppe",
+    "points": 3,
+    "type": "c"
+  },
+  {
+    "id": 19,
+    "name": "re coppe",
+    "points": 4,
+    "type": "c"
+  },
+  {
+    "id": 20,
+    "name": "asso coppe",
+    "points": 11,
+    "type": "c"
+  },
+  {
+    "id": 21,
+    "name": "2 bastoni",
+    "points": 0,
+    "type": "b"
+  },
+  {
+    "id": 22,
+    "name": "3 bastoni",
+    "points": 10,
+    "type": "b"
+  },
+  {
+    "id": 23,
+    "name": "4 bastoni",
+    "points": 0,
+    "type": "b"
+  },
+  {
+    "id": 24,
+    "name": "5 bastoni",
+    "points": 0,
+    "type": "b"
+  },
+  {
+    "id": 25,
+    "name": "6 bastoni",
+    "points": 0,
+    "type": "b"
+  },
+  {
+    "id": 26,
+    "name": "7 bastoni",
+    "points": 0,
+    "type": "b"
+  },
+  {
+    "id": 27,
+    "name": "fante bastoni",
+    "points": 2,
+    "type": "b"
+  },
+  {
+    "id": 28,
+    "name": "cavallo bastoni",
+    "points": 3,
+    "type": "b"
+  },
+  {
+    "id": 29,
+    "name": "re bastoni",
+    "points": 4,
+    "type": "b"
+  },
+  {
+    "id": 30,
+    "name": "asso bastoni",
+    "points": 11,
+    "type": "b"
+  },
+  {
+    "id": 31,
+    "name": "2 spade",
+    "points": 0,
+    "type": "s"
+  },
+  {
+    "id": 32,
+    "name": "3 spade",
+    "points": 10,
+    "type": "s"
+  },
+  {
+    "id": 33,
+    "name": "4 spade",
+    "points": 0,
+    "type": "s"
+  },
+  {
+    "id": 34,
+    "name": "5 spade",
+    "points": 0,
+    "type": "s"
+  },
+  {
+    "id": 35,
+    "name": "6 spade",
+    "points": 0,
+    "type": "s"
+  },
+  {
+    "id": 36,
+    "name": "7 spade",
+    "points": 0,
+    "type": "s"
+  },
+  {
+    "id": 37,
+    "name": "fante spade",
+    "points": 2,
+    "type": "s"
+  },
+  {
+    "id": 38,
+    "name": "cavallo spade",
+    "points": 3,
+    "type": "s"
+  },
+  {
+    "id": 39,
+    "name": "re spade",
+    "points": 4,
+    "type": "s"
+  },
+  {
+    "id": 40,
+    "name": "asso spade",
+    "points": 11,
+    "type": "s"
+  }
+]

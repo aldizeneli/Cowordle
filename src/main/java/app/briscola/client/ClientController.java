@@ -47,7 +47,7 @@ public class ClientController implements Initializable {
             System.out.println("Enter your username for the game: ");
             String username = scanner.nextLine();
             Socket socket = new Socket("localhost", 1234);
-            Client client = new Client(socket, username);
+            Client client = new Client(socket, username, this);
 
             //avvio i thread (sarebbero operazioni bloccanti altrimenti)
             client.listenForMessage();
@@ -88,6 +88,12 @@ public class ClientController implements Initializable {
 //
 //            }
 //        });
+    }
+
+    public void test() {
+        Platform.runLater(new Runnable() {
+            public void run() { button_send.setText("dio porco"); }
+        });
     }
 
     public static void addLabel(String msgFromServer, final VBox vBox) {

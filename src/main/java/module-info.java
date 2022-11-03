@@ -8,7 +8,7 @@ module app.briscola {
 
     exports app.briscola.server;
     exports app.briscola.client;
-    exports app.briscola.utility;
+    exports app.briscola.shared;
     opens app.briscola.server to javafx.fxml;
     opens app.briscola.client to javafx.fxml;
 }

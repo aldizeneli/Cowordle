@@ -83,11 +83,18 @@ public class Server {
                         if(message.username.equals(currentTurnUsername)) {
                             System.out.println(message.message + " " + message.username);
 
-
                             if(gameInProgress) {
-                                computeAnswer(message);
-                            }
+                                String result = getAnswerEvaluation(message);
+                                if(result.equals(("ggggg"))) { //parola indovinata
+                                    clientHandler.incrementScore();
+                                    broadcastMessage(result, ActionType.WORDGUESSED);
 
+
+                                }
+                                else {
+                                    broadcastMessage(result, ActionType.WORDGUESSRESULT);
+                                }
+                            }
 
                             currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
                             currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
@@ -107,7 +114,7 @@ public class Server {
         }).start();
     }
 
-    private void computeAnswer(Message message) {
+    private String getAnswerEvaluation(Message message) {
         //TODO: if(answerArray.length != currentWord.lenght) => invalid
 
         StringBuilder answer = new StringBuilder();
@@ -123,9 +130,7 @@ public class Server {
             }
         }
         System.out.println("guess result: " + answer);
-
-
-        broadcastMessage(answer.toString(), ActionType.WORDGUESSRESULT);
+        return answer.toString();
     }
 
     private void broadcastMessage(String messageToSend, ActionType action) {

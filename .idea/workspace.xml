@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-rinominato progetto come Cowordle">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" afterDir="false" />
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-logica invio di parole da client a turno&#10;-analisi del server dell'input e invio risultato a tutti i client&#10;-modifiche alla ui (solo vbox)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668769403695</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="-logica invio di parole da client a turno&#10;-analisi del server dell'input e invio risultato a tutti i client&#10;-modifiche alla ui (solo vbox)">
+      <created>1668787075470</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1668787075470</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,6 +173,7 @@
     <MESSAGE value="-aggiunta check sul client invia messaggio solo se è il suo turno" />
     <MESSAGE value="-rimossi riferimenti a briscola&#10;-iniziato logica Wordle" />
     <MESSAGE value="-rinominato progetto come Cowordle" />
-    <option name="LAST_COMMIT_MESSAGE" value="-rinominato progetto come Cowordle" />
+    <MESSAGE value="-logica invio di parole da client a turno&#10;-analisi del server dell'input e invio risultato a tutti i client&#10;-modifiche alla ui (solo vbox)" />
+    <option name="LAST_COMMIT_MESSAGE" value="-logica invio di parole da client a turno&#10;-analisi del server dell'input e invio risultato a tutti i client&#10;-modifiche alla ui (solo vbox)" />
   </component>
 </project>

@@ -12,6 +12,8 @@ import java.util.Scanner;
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
 import com.google.gson.Gson;
+import javafx.scene.control.Label;
+import javafx.stage.Popup;
 
 public class Client {
     private Socket socket;
@@ -100,6 +102,9 @@ public class Client {
                             gameStarted = true;
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message);
+                        } else if(message.action == ActionType.WORDGUESSED) {
+
+                            controller.initializeNewTurn("TODO: get guessed word from message");
                         }
 
                     } catch(IOException e) {

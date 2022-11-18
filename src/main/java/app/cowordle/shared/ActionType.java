@@ -7,5 +7,6 @@ public enum ActionType {
     CLIENTANSWER,
     SERVERINFO,
     WORDGUESS,
-    WORDGUESSRESULT
+    WORDGUESSRESULT,
+    WORDGUESSED
 }

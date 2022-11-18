@@ -17,15 +17,23 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 public class ClientController implements Initializable {
+    @FXML
+    private AnchorPane ap_main;
     @FXML
     private Button button_send;
     @FXML
@@ -86,39 +94,6 @@ public class ClientController implements Initializable {
             }
         });
 
-//        try {
-//            this.client = new Client(new Socket("localhost", 1234));
-//            System.out.println("Connected to server");
-//        } catch (IOException var4) {
-//            var4.printStackTrace();
-//        }
-//
-//        this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
-//                ClientController.this.sp_main.setVvalue((Double)newVal);
-//            }
-//        });
-//        this.client.receiveMessageFromServer(this.vbox_messages);
-//        this.button_send.setOnAction(new EventHandler<ActionEvent>() {
-//            public void handle(ActionEvent actionEvent) {
-//                String messageToSend = ClientController.this.tf_message.getText();
-//                if (!messageToSend.isEmpty()) {
-//                    HBox hBox = new HBox();
-//                    hBox.setAlignment(Pos.CENTER_RIGHT);
-//                    hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
-//                    Text text = new Text(messageToSend);
-//                    TextFlow textFlow = new TextFlow(new Node[]{text});
-//                    textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: rgb(15, 125, 242); -fx-background-radius: 20px;");
-//                    textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
-//                    text.setFill(Color.color(0.934, 0.945, 0.996));
-//                    hBox.getChildren().add(textFlow);
-//                    ClientController.this.vbox_messages.getChildren().add(hBox);
-//                    ClientController.this.client.sendMessageToServer(messageToSend);
-//                    ClientController.this.tf_message.clear();
-//                }
-//
-//            }
-//        });
     }
 
     public void addWordGuess(String answerFromServer) {
@@ -167,19 +142,39 @@ public class ClientController implements Initializable {
         return "rgb(" + rgbValue + ")";
     }
 
-    public static void addLabel(String msgFromServer, final VBox vBox) {
-        final HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
-        Text text = new Text(msgFromServer);
-        TextFlow textFlow = new TextFlow(new Node[]{text});
-        textFlow.setStyle("-fx-background-color: rgb(233, 233, 235); -fx-background-radius: 20px;");
-        textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
-        hBox.getChildren().add(textFlow);
+    public void initializeNewTurn(String wordGuessed) {
         Platform.runLater(new Runnable() {
-            public void run() {
-                vBox.getChildren().add(hBox);
+            public void run()
+            {
+                showInfoPopup(wordGuessed);
             }
         });
+    }
+
+    private void showInfoPopup(String wordGuessed) {
+        //TODO: try to initialize popup only once during startup and here just do myDialog.show();
+        Stage myDialog = new Stage();
+        myDialog.initModality(Modality.WINDOW_MODAL);
+        Button okButton = new Button("Ok");
+        okButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                myDialog.close();
+                ClientController.this.vbox_messages.getChildren().clear();
+                button_send.setDisable(false);
+            }
+        });
+
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
+        vbox.setSpacing(25);
+        vbox.getChildren().add(new Text("Your opponent guessed right the word: " + wordGuessed));
+        vbox.getChildren().add(okButton);
+
+        Scene myDialogScene = new Scene(vbox);
+        myDialog.setScene(myDialogScene);
+        myDialog.show();
+        button_send.setDisable(true);
     }
 }

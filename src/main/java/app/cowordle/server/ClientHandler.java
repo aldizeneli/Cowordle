@@ -10,6 +10,7 @@ public class ClientHandler {
     public BufferedReader bufferedReader;
     public BufferedWriter bufferedWriter;
     public String clientUsername;
+    private int score;
 
     public ClientHandler(Socket socket) {
         try {
@@ -22,6 +23,14 @@ public class ClientHandler {
         } catch(IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
+    }
+
+    public void incrementScore() {
+        this.score ++;
+    }
+
+    public boolean isWinner() {
+        return this.score == 5;
     }
 
 //	@Override

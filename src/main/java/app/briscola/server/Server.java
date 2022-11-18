@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import app.briscola.shared.Deck;
+import app.briscola.shared.Vocabulary;
 import com.google.gson.Gson;
 
 import app.briscola.shared.Message;
@@ -16,7 +16,7 @@ public class Server {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private String currentTurnUsername;
     private int currentTurnUserIndex;
-    private String briscolaCode;
+    private String currentWord;
 
     public Server(ServerSocket serverSocket) {
 
@@ -59,10 +59,10 @@ public class Server {
 
         broadcastMessage("GO:" + currentTurnUsername);
 
-        Deck deck = new Deck();
-        briscolaCode = deck.getBriscolaCode();
+        Vocabulary vocabulary = new Vocabulary();
+        currentWord = vocabulary.getWord();
 
-        System.out.println("briscola: " + briscolaCode);
+        System.out.println("word to guess: " + currentWord);
     }
 
     private void listenForMessage(ClientHandler clientHandler) {

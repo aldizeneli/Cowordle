@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-aggiunta check sul client invia messaggio solo se è il suo turno">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Word.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app/briscola/server/vocabulary.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Card.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Vocabulary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/briscola/server/cards.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +55,9 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\zenel_08nepwp\Desktop\Briscola\Briscola\src\main\resources\app\briscola\server" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="app.briscola.shared" />
     </key>
   </component>
   <component name="RunManager">
@@ -113,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667493825411</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="-aggiunta check sul client invia messaggio solo se è il suo turno">
+      <created>1667494988702</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667494988702</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -134,6 +148,7 @@
     <MESSAGE value="-importato codice di server e client, ma interfaccia client NON parte (parte se commenti clientController.Initialize())" />
     <MESSAGE value="-risolto problema di interfaccia che non partiva dei client, era a causa di  client.sendMessage(); che non era un thread come  client.listenForMessage() ed essendo un operazione blocante necessitava di girare su un suo thread" />
     <MESSAGE value="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco" />
-    <option name="LAST_COMMIT_MESSAGE" value="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco" />
+    <MESSAGE value="-aggiunta check sul client invia messaggio solo se è il suo turno" />
+    <option name="LAST_COMMIT_MESSAGE" value="-aggiunta check sul client invia messaggio solo se è il suo turno" />
   </component>
 </project>

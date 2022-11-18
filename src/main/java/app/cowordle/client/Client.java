@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
 import com.google.gson.Gson;
 
@@ -19,6 +20,7 @@ public class Client {
     private String username;
     private boolean isMyTurn;
     private ClientController controller;
+    private boolean gameStarted;
 
     public Client(Socket socket, String username, ClientController controller) {
         try {
@@ -54,7 +56,7 @@ public class Client {
                             continue;
                         }
 
-                        Message messageObject = new Message(inputText, username);
+                        Message messageObject = new Message(inputText, username, ActionType.CLIENTANSWER);
                         String message = gson.toJson(messageObject);
                         System.out.println(message);
 
@@ -73,24 +75,31 @@ public class Client {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String msgFromGroupChat;
-
+                String msgFromServer;
+                Gson gson = new Gson();
                 while(socket.isConnected()) {
                     try {
-                        msgFromGroupChat = bufferedReader.readLine();
-                        System.out.println(msgFromGroupChat);
+                        msgFromServer = bufferedReader.readLine();
+                        Message message = gson.fromJson(msgFromServer, Message.class);
+                        System.out.println(message.message + "  " + message.action);
 
-                        if(msgFromGroupChat.startsWith("GO:")) {
-                            if(msgFromGroupChat.equals("GO:"+username)) {
+                        if(message.action == ActionType.TURNCHANGE) {
+                            if(message.message.equals(username)) {
                                 System.out.println("è il mio turno!");
                                 isMyTurn = true;
                             } else
                                 isMyTurn = false;
-                        } else if(msgFromGroupChat.startsWith("SERVER:")) {
-                            if(msgFromGroupChat.equals("SERVER:TURNEND")) {
+
+                            //TODO: unlock ui to insert values
+                        } else if(message.action == ActionType.SERVERINFO) {
+                            if(message.message.equals("SERVER:TURNEND")) {
                                 //receive new card from server and update ui
                                 //controller.test();
                             }
+                        } else if(message.action == ActionType.GAMESTART) {
+                            gameStarted = true;
+                        } else if(message.action == ActionType.WORDGUESSRESULT) {
+                            controller.addWordGuess(message.message);
                         }
 
                     } catch(IOException e) {
@@ -101,6 +110,26 @@ public class Client {
         }).start();
     }
 
+    public void sendMessageToServer(String messageInput) {
+        try {
+            Gson gson = new Gson();
+            if(!isMyTurn) {
+                System.out.println("Is not my turn! i cant send this message to the server");
+                //TODO: visible in ui "is not your turn!"
+                return;
+            }
+
+            Message messageObject = new Message(messageInput, username, ActionType.WORDGUESS);
+            String message = gson.toJson(messageObject);
+            System.out.println(message);
+
+            bufferedWriter.write(message);
+            bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
+            bufferedWriter.flush();
+        } catch(IOException e) {
+            closeEverything(socket, bufferedReader, bufferedWriter);
+        }
+    }
 
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         try {

@@ -1,4 +1,4 @@
-package app.briscola.server;
+package app.cowordle.server;
 
 
 import java.io.IOException;
@@ -6,10 +6,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import app.briscola.shared.Vocabulary;
+import app.cowordle.shared.Vocabulary;
 import com.google.gson.Gson;
 
-import app.briscola.shared.Message;
+import app.cowordle.shared.Message;
 
 public class Server {
     private ServerSocket serverSocket;

@@ -1,4 +1,4 @@
-package app.briscola.client;
+package app.cowordle.client;
 
 
 import java.io.BufferedReader;
@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-import app.briscola.shared.Message;
+import app.cowordle.shared.Message;
 import com.google.gson.Gson;
 
 public class Client {

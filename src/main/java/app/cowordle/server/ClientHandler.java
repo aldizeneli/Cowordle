@@ -1,8 +1,7 @@
-package app.briscola.server;
+package app.cowordle.server;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ClientHandler {
 

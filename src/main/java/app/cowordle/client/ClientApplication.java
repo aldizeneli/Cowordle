@@ -1,9 +1,7 @@
-package app.briscola.client;
+package app.cowordle.client;
 
 
 import java.io.IOException;
-import java.net.Socket;
-import java.util.Scanner;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

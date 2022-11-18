@@ -6,9 +6,9 @@ module app.briscola {
 
     //opens app.briscola to javafx.fxml;
 
-    exports app.briscola.server;
-    exports app.briscola.client;
-    exports app.briscola.shared;
-    opens app.briscola.server to javafx.fxml;
-    opens app.briscola.client to javafx.fxml;
+    exports app.cowordle.server;
+    exports app.cowordle.client;
+    exports app.cowordle.shared;
+    opens app.cowordle.server to javafx.fxml;
+    opens app.cowordle.client to javafx.fxml;
 }

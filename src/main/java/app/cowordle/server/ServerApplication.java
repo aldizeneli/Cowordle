@@ -1,13 +1,9 @@
-package app.briscola.server;
+package app.cowordle.server;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-
-import javafx.scene.Parent;
 
 public class ServerApplication extends javafx.application.Application {
     public ServerApplication() {

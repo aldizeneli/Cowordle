@@ -4,14 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-aggiunta check sul client invia messaggio solo se è il suo turno">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Word.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/briscola/server/vocabulary.json" afterDir="false" />
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-rimossi riferimenti a briscola&#10;-iniziato logica Wordle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Card.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Vocabulary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/briscola/server/cards.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Vocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/briscola/shared/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Word.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/briscola/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/briscola/server/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/server/sample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/briscola/server/vocabulary.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/server/vocabulary.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +39,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/app/briscola/server/ServerApplication.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/app/cowordle/server/ServerApplication.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -41,17 +50,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zenel_08nepwp/Desktop/Briscola/Briscola&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/zenel_08nepwp/Desktop/Briscola/Briscola",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\zenel_08nepwp\Desktop\Briscola\Briscola\src\main\resources\app\briscola\server" />
@@ -62,8 +71,21 @@
   </component>
   <component name="RunManager">
     <configuration name="multiRun" type="Application" factoryName="Application" singleton="false">
-      <option name="MAIN_CLASS_NAME" value="app.briscola.client.ClientApplication" />
-      <module name="Briscola" />
+      <option name="MAIN_CLASS_NAME" value="app.cowordle.client.ClientApplication" />
+      <module name="Cowordle" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Cowordle" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Cowordle" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -127,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667494988702</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="-rimossi riferimenti a briscola&#10;-iniziato logica Wordle">
+      <created>1668768956680</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1668768956680</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -149,6 +178,7 @@
     <MESSAGE value="-risolto problema di interfaccia che non partiva dei client, era a causa di  client.sendMessage(); che non era un thread come  client.listenForMessage() ed essendo un operazione blocante necessitava di girare su un suo thread" />
     <MESSAGE value="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco" />
     <MESSAGE value="-aggiunta check sul client invia messaggio solo se è il suo turno" />
-    <option name="LAST_COMMIT_MESSAGE" value="-aggiunta check sul client invia messaggio solo se è il suo turno" />
+    <MESSAGE value="-rimossi riferimenti a briscola&#10;-iniziato logica Wordle" />
+    <option name="LAST_COMMIT_MESSAGE" value="-rimossi riferimenti a briscola&#10;-iniziato logica Wordle" />
   </component>
 </project>

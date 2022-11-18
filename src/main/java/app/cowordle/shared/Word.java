@@ -1,4 +1,4 @@
-package app.briscola.shared;
+package app.cowordle.shared;
 
 public class Word {
     public String value;

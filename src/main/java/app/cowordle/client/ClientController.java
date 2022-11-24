@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,6 +43,8 @@ public class ClientController implements Initializable {
     private VBox vbox_messages;
     @FXML
     private ScrollPane sp_main;
+    @FXML
+    private ImageView imageView_logo;
     private Client client;
 
     public ClientController() {
@@ -118,9 +121,9 @@ public class ClientController implements Initializable {
         Text text = new Text(String.valueOf(answerChar));
         TextFlow textFlow = new TextFlow(new Node[]{text});
         textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: " + getRgbColorStringFromChar(answerChar) +"; -fx-background-radius: 12px;");
-        textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
+        textFlow.setPadding(new Insets(8.0, 10.0, 8.0, 10.0));
         text.setFill(Color.color(0.934, 0.945, 0.996));
-        text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 80));
+        text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 85));
         return textFlow;
     }
 

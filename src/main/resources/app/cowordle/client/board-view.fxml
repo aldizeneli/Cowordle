@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="ap_main" fx:controller="app.cowordle.client.ClientController"
-            prefHeight="396" prefWidth="478"
-            xmlns:fx="http://javafx.com/fxml">
+<AnchorPane fx:id="ap_main" prefHeight="740" prefWidth="565" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #B5FFFC 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.ClientController">
     <children>
-        <Button fx:id="button_send" layoutX="404" layoutY="330" text="Send"/>
-        <TextField fx:id="tf_message" layoutX="30" layoutY="328"
-                   prefWidth="361" prefHeight="26" />
-        <ScrollPane fx:id="sp_main" layoutY="70" layoutX="30"
-                    prefHeight="256" prefWidth="418" fitToWidth="true">
+        <Button fx:id="button_send" layoutX="404.0" layoutY="633.0" prefHeight="34.0" prefWidth="116.0" text="Send" style="-fx-focus-color: transparent; -fx-border-color: white; -fx-border-width: 3px; -fx-opacity: 0.85;"/>
+        <TextField fx:id="tf_message" layoutX="33.0" layoutY="633.0" prefHeight="34.0" prefWidth="361" style="-fx-focus-color: transparent; -fx-opacity: 0.85;"/>
+        <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="30" layoutY="115.0" prefHeight="490.0" prefWidth="490.0" style="-fx-focus-color: transparent; -fx-opacity: 0.70;">
             <content>
-                <VBox fx:id="vbox_messages" prefHeight="248" prefWidth="412" />
+                <VBox fx:id="vbox_messages" prefHeight="490.0" prefWidth="470.0"/>
             </content>
         </ScrollPane>
-        <Label layoutX="184" layoutY="26"
-               text="Client">
-            <font>
-                <Font name="Arial Rounded NT Bold" size="23"></Font>
-            </font>
-        </Label>
+      <ImageView fx:id="imageView_logo" fitHeight="89.0" fitWidth="116.0" layoutX="217.0" layoutY="14.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/app-logo.png" />
+         </image></ImageView>
     </children>
 </AnchorPane>

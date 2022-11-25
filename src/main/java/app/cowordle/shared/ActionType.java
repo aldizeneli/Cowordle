@@ -8,5 +8,7 @@ public enum ActionType {
     SERVERINFO,
     WORDGUESS,
     WORDGUESSRESULT,
-    WORDGUESSED
+    WORDGUESSED,
+    GAMEEND,
+    PLAYERLEFT
 }

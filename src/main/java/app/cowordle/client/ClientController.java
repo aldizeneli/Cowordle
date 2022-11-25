@@ -99,17 +99,22 @@ public class ClientController implements Initializable {
 
     }
 
-    public void addWordGuess(String answerFromServer) {
+    public void addWordGuess(String inputWord, String resultFromServer) {
         Platform.runLater(new Runnable() {
             public void run()
             {
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.CENTER);
-                hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
-                hBox.setSpacing(15);
+                hBox.setPadding(new Insets(10, 0, 0, 5));
+                hBox.setSpacing(8);
 
-                for (char c: answerFromServer.toCharArray()) {
-                    hBox.getChildren().add(getTextFlowFromChar(c));
+                char[] inputWordArray = inputWord.toCharArray();
+                char[] resultFromServerArray = resultFromServer.toCharArray();
+                for (int i = 0; i < inputWordArray.length; i++) {
+                    char inputChar = inputWordArray[i];
+                    char resultChar = resultFromServerArray[i];
+
+                    hBox.getChildren().add(getTextFlowFromChar(inputChar, resultChar));
                 }
 
                 ClientController.this.vbox_messages.getChildren().add(hBox);
@@ -117,13 +122,21 @@ public class ClientController implements Initializable {
         });
     }
 
-    public TextFlow getTextFlowFromChar(char answerChar) {
+    public TextFlow getTextFlowFromChar(char answerChar, char resultChar) {
         Text text = new Text(String.valueOf(answerChar));
         TextFlow textFlow = new TextFlow(new Node[]{text});
-        textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: " + getRgbColorStringFromChar(answerChar) +"; -fx-background-radius: 12px;");
-        textFlow.setPadding(new Insets(8.0, 10.0, 8.0, 10.0));
+        textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: " + getRgbColorStringFromChar(resultChar) +"; -fx-background-radius: 12px;");
+        //textFlow.setPadding(new Insets(10.0, 5.0, 10.0, 5.0));
         text.setFill(Color.color(0.934, 0.945, 0.996));
         text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 85));
+
+        textFlow.setMinHeight(110.0);
+        textFlow.setMinWidth(90.0);
+        textFlow.setMaxHeight(110.0);
+        textFlow.setMaxWidth(90.0);
+
+        textFlow.setTextAlignment(TextAlignment.CENTER);
+        System.out.println(textFlow.getTextAlignment().name());
         return textFlow;
     }
 

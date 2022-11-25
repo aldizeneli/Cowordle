@@ -13,8 +13,8 @@ import javafx.stage.StageStyle;
 
 public class ClientApplication extends javafx.application.Application {
 
-    static final double STAGE_HEIGHT=740.0;
-    static final double STAGE_WIDTH=565.0;
+    static final double STAGE_HEIGHT=735.0;
+    static final double STAGE_WIDTH=575.0;
     public ClientApplication() { }
 
     public void start(Stage stage) throws IOException {

@@ -58,7 +58,7 @@ public class Client {
                             continue;
                         }
 
-                        Message messageObject = new Message(inputText, username, ActionType.CLIENTANSWER);
+                        Message messageObject = new Message(inputText, username, ActionType.CLIENTANSWER, null);
                         String message = gson.toJson(messageObject);
                         System.out.println(message);
 
@@ -94,17 +94,21 @@ public class Client {
 
                             //TODO: unlock ui to insert values
                         } else if(message.action == ActionType.SERVERINFO) {
-                            if(message.message.equals("SERVER:TURNEND")) {
-                                //receive new card from server and update ui
-                                //controller.test();
-                            }
+
                         } else if(message.action == ActionType.GAMESTART) {
                             gameStarted = true;
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
-                            controller.addWordGuess(message.message);
+                            controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-
                             controller.initializeNewTurn("TODO: get guessed word from message");
+                        }  else if(message.action == ActionType.GAMEEND) {
+                            if(message.message.equals(username)) {
+                                //TODO: mostrare popup con "congratulazioni, hai vinto"
+                            } else {
+                                //TODO: mostrare popup con "mi dispiace, hai perso"
+                            }
+                        } else if(message.action == ActionType.PLAYERLEFT) {
+                            //TODO: vittoria a tavolino quando avversario ha abbandonato
                         }
 
                     } catch(IOException e) {
@@ -124,7 +128,7 @@ public class Client {
                 return;
             }
 
-            Message messageObject = new Message(messageInput, username, ActionType.WORDGUESS);
+            Message messageObject = new Message(messageInput, username, ActionType.WORDGUESS, null);
             String message = gson.toJson(messageObject);
             System.out.println(message);
 

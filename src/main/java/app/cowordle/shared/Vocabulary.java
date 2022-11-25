@@ -36,6 +36,6 @@ public class Vocabulary {
         System.out.println(vocabulary.get(0).value);
         Word wordToGuess = vocabulary.get(randomIndex);
         vocabulary.remove(randomIndex);
-        return wordToGuess.value;
+        return wordToGuess.value.toLowerCase();
     }
 }

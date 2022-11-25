@@ -4,13 +4,13 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="ap_main" prefHeight="740" prefWidth="565" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #B5FFFC 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.ClientController">
+<AnchorPane fx:id="ap_main" prefHeight="700.0" prefWidth="565.0" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #B5FFFC 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.ClientController">
     <children>
-        <Button fx:id="button_send" layoutX="404.0" layoutY="633.0" prefHeight="34.0" prefWidth="116.0" text="Send" style="-fx-focus-color: transparent; -fx-border-color: white; -fx-border-width: 3px; -fx-opacity: 0.85;"/>
-        <TextField fx:id="tf_message" layoutX="33.0" layoutY="633.0" prefHeight="34.0" prefWidth="361" style="-fx-focus-color: transparent; -fx-opacity: 0.85;"/>
-        <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="30" layoutY="115.0" prefHeight="490.0" prefWidth="490.0" style="-fx-focus-color: transparent; -fx-opacity: 0.70;">
+        <Button fx:id="button_send" layoutX="404.0" layoutY="633.0" prefHeight="34.0" prefWidth="116.0" style="-fx-focus-color: transparent; -fx-border-color: white; -fx-border-width: 3px; -fx-opacity: 0.85;" text="Send" />
+        <TextField fx:id="tf_message" layoutX="33.0" layoutY="633.0" prefHeight="34.0" prefWidth="361" style="-fx-focus-color: transparent; -fx-opacity: 0.85;" />
+        <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="30" layoutY="115.0" prefHeight="490.0" prefWidth="520.0" style="-fx-focus-color: transparent; -fx-opacity: 0.70;">
             <content>
-                <VBox fx:id="vbox_messages" prefHeight="490.0" prefWidth="470.0"/>
+                <VBox fx:id="vbox_messages" prefHeight="490.0" prefWidth="470.0" />
             </content>
         </ScrollPane>
       <ImageView fx:id="imageView_logo" fitHeight="89.0" fitWidth="116.0" layoutX="217.0" layoutY="14.0" pickOnBounds="true">

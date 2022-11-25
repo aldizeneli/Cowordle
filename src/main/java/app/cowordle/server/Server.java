@@ -42,7 +42,7 @@ public class Server {
                 listenForMessage(clientHandler);
                 numOfClients++;
 
-                broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + numOfClients, ActionType.SERVERINFO);
+                broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + numOfClients, ActionType.SERVERINFO, null);
             }
 
             startGame();
@@ -54,14 +54,14 @@ public class Server {
 
     private void startGame() {
         System.out.println("All ready, starting game...");
-        broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo", ActionType.GAMESTART);
+        broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo", ActionType.GAMESTART, null);
 
         this.gameInProgress = true;
 
         currentTurnUserIndex = 0;
         currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
 
-        broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE);
+        broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
 
         Vocabulary vocabulary = new Vocabulary();
         currentWord = vocabulary.getWord();
@@ -85,20 +85,29 @@ public class Server {
 
                             if(gameInProgress) {
                                 String result = getAnswerEvaluation(message);
-                                if(result.equals(("ggggg"))) { //parola indovinata
+
+                                System.out.println("1 - " + result + "  -  " + message.message);
+
+                                if(result.equals(("ggggg"))) { //parola indovinata todo: migliorare
                                     clientHandler.incrementScore();
-                                    broadcastMessage(result, ActionType.WORDGUESSED);
+                                    broadcastMessage(result, ActionType.WORDGUESSED, null);
 
+                                    if(clientHandler.isWinner()) {
 
+                                        broadcastMessage(clientHandler.clientUsername, ActionType.GAMEEND, null);
+
+                                        //TODO: operazioni di chiusura partita lato server (ricominciare partita se possibile,
+                                        // cioè se i client sn ancora connessi dopo 30 sec (lo capisci dal heartbeat quando lo implementi))
+                                    }
                                 }
                                 else {
-                                    broadcastMessage(result, ActionType.WORDGUESSRESULT);
+                                    broadcastMessage(message.message, ActionType.WORDGUESSRESULT, result);
                                 }
                             }
 
                             currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
                             currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
-                            broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE);
+                            broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
                         }
                         else
                             System.out.println("messaggio rifiutato");
@@ -118,7 +127,7 @@ public class Server {
         //TODO: if(answerArray.length != currentWord.lenght) => invalid
 
         StringBuilder answer = new StringBuilder();
-        char[] currentWordArray = message.message.toCharArray();
+        char[] currentWordArray = message.message.toLowerCase().toCharArray();
         for (int i = 0; i < currentWordArray.length; i++) {
             char currentChar = currentWordArray[i];
             if(currentChar == currentWord.charAt((i))) {
@@ -133,11 +142,11 @@ public class Server {
         return answer.toString();
     }
 
-    private void broadcastMessage(String messageToSend, ActionType action) {
+    private void broadcastMessage(String messageToSend, ActionType action, String additionalInfo) {
         Gson gson = new Gson();
         for(ClientHandler clientHandler : clientHandlers) {
             try {
-                Message messageObject = new Message(messageToSend, "server", action);
+                Message messageObject = new Message(messageToSend, "server", action, additionalInfo);
                 String message = gson.toJson(messageObject);
 
                 clientHandler.bufferedWriter.write(message);

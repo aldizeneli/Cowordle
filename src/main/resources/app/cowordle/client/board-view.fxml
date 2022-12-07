@@ -8,7 +8,7 @@
     <children>
         <Button fx:id="button_send" layoutX="404.0" layoutY="633.0" prefHeight="34.0" prefWidth="116.0" style="-fx-focus-color: transparent; -fx-border-color: white; -fx-border-width: 3px; -fx-opacity: 0.85;" text="Send" />
         <TextField fx:id="tf_message" layoutX="33.0" layoutY="633.0" prefHeight="34.0" prefWidth="361" style="-fx-focus-color: transparent; -fx-opacity: 0.85;" />
-        <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="30" layoutY="115.0" prefHeight="490.0" prefWidth="520.0" style="-fx-focus-color: transparent; -fx-opacity: 0.70;">
+        <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="30" layoutY="115.0" prefHeight="490.0" prefWidth="518.0" style="-fx-focus-color: transparent; -fx-opacity: 0.70;">
             <content>
                 <VBox fx:id="vbox_messages" prefHeight="490.0" prefWidth="470.0" />
             </content>

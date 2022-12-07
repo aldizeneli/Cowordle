@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-miglioramenti interfaccia">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-mostriamo parola inserita da client al posto della sigla colore&#10;-lettere hanno background di dimensione fissa e sono centrate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -171,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669314480965</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="-mostriamo parola inserita da client al posto della sigla colore&#10;-lettere hanno background di dimensione fissa e sono centrate">
+      <created>1669394179831</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1669394179832</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -198,6 +200,7 @@
     <MESSAGE value="-logica invio di parole da client a turno&#10;-analisi del server dell'input e invio risultato a tutti i client&#10;-modifiche alla ui (solo vbox)" />
     <MESSAGE value="-logica per vincitore turno (manca logica fine partita)&#10;-popup avviso quando parola indovinata&#10;-modifche ui" />
     <MESSAGE value="-miglioramenti interfaccia" />
-    <option name="LAST_COMMIT_MESSAGE" value="-miglioramenti interfaccia" />
+    <MESSAGE value="-mostriamo parola inserita da client al posto della sigla colore&#10;-lettere hanno background di dimensione fissa e sono centrate" />
+    <option name="LAST_COMMIT_MESSAGE" value="-mostriamo parola inserita da client al posto della sigla colore&#10;-lettere hanno background di dimensione fissa e sono centrate" />
   </component>
 </project>

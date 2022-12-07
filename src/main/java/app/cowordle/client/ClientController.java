@@ -123,16 +123,16 @@ public class ClientController implements Initializable {
     }
 
     public TextFlow getTextFlowFromChar(char answerChar, char resultChar) {
-        Text text = new Text(String.valueOf(answerChar));
+        Text text = new Text(String.valueOf(answerChar).toUpperCase());
         TextFlow textFlow = new TextFlow(new Node[]{text});
         textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: " + getRgbColorStringFromChar(resultChar) +"; -fx-background-radius: 12px;");
         //textFlow.setPadding(new Insets(10.0, 5.0, 10.0, 5.0));
         text.setFill(Color.color(0.934, 0.945, 0.996));
         text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 85));
 
-        textFlow.setMinHeight(110.0);
+        textFlow.setMinHeight(115.0);
         textFlow.setMinWidth(90.0);
-        textFlow.setMaxHeight(110.0);
+        textFlow.setMaxHeight(115.0);
         textFlow.setMaxWidth(90.0);
 
         textFlow.setTextAlignment(TextAlignment.CENTER);
@@ -171,7 +171,11 @@ public class ClientController implements Initializable {
         //TODO: try to initialize popup only once during startup and here just do myDialog.show();
         Stage myDialog = new Stage();
         myDialog.initModality(Modality.WINDOW_MODAL);
+        myDialog.setTitle("Info");
+
         Button okButton = new Button("Ok");
+        okButton.setMaxWidth(40.0);
+        okButton.setMinWidth(40.0);
         okButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {

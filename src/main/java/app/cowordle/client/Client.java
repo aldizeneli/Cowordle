@@ -100,7 +100,7 @@ public class Client {
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-                            controller.initializeNewTurn("TODO: get guessed word from message");
+                            controller.initializeNewTurn(message.additionalInfo);
                         }  else if(message.action == ActionType.GAMEEND) {
                             if(message.message.equals(username)) {
                                 //TODO: mostrare popup con "congratulazioni, hai vinto"

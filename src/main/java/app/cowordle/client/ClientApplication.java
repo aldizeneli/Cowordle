@@ -18,7 +18,7 @@ public class ClientApplication extends javafx.application.Application {
     public ClientApplication() { }
 
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("board-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("username-view.fxml"));
         Scene scene = new Scene((Parent)fxmlLoader.load(), STAGE_HEIGHT, STAGE_WIDTH);
         stage.setTitle("Cowordle!");
         stage.setScene(scene);

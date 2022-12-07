@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -13,13 +12,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -29,7 +29,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class ClientController implements Initializable {
@@ -43,20 +42,25 @@ public class ClientController implements Initializable {
     private VBox vbox_messages;
     @FXML
     private ScrollPane sp_main;
-    @FXML
-    private ImageView imageView_logo;
+//    @FXML
+//    private ImageView imageView_logo;
     private Client client;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
 
     public ClientController() {
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    public void initializeGameStage(String username) {
 
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter your username for the game: ");
-            String username = scanner.nextLine();
+//            Scanner scanner = new Scanner(System.in);
+//            System.out.println("Enter your username for the game: ");
+//            String username = scanner.nextLine();
             Socket socket = new Socket("localhost", 1234);
             this.client = new Client(socket, username, this);
 
@@ -66,7 +70,10 @@ public class ClientController implements Initializable {
         }  catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
@@ -96,7 +103,24 @@ public class ClientController implements Initializable {
                 }
             }
         });
+    }
 
+    public void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score)  {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scoreboard-view.fxml"));
+            root = loader.load();
+
+            ScoreboardSceneController scoreboardController = loader.getController();
+            scoreboardController.initializeScoreboardStage(player1username, player1score, player2username, player2score);
+
+            //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
+            stage = (Stage) this.ap_main.getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addWordGuess(String inputWord, String resultFromServer) {
@@ -182,6 +206,9 @@ public class ClientController implements Initializable {
                 myDialog.close();
                 ClientController.this.vbox_messages.getChildren().clear();
                 button_send.setDisable(false);
+
+                //TODO: da chiamare solo se partita finita, non ad ogni parola indovinata
+                loadScoreboardScene("player 1", 5, "Player 2", 4 );
             }
         });
 

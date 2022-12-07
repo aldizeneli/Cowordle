@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="ap_username" prefHeight="700.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.UsernameSceneController">
+   <children>
+      <Label layoutX="69.0" layoutY="40.0" prefHeight="53.0" prefWidth="425.0" text="Welcome to COWORDLE!">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="button_sendUsername" layoutX="401.0" layoutY="624.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="115.0" text="Play" textAlignment="CENTER" />
+      <TextField fx:id="tf_username" layoutX="41.0" layoutY="624.0" prefHeight="25.0" prefWidth="340.0" />
+      <ImageView fitHeight="292.0" fitWidth="332.0" layoutX="44.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/rules.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="41.0" layoutY="95.0" prefHeight="183.0" prefWidth="481.0" text="Guess the word before your oppoenent does!&#10;Each answer must be a 5 letters word.&#10;30 seconds time to answer each time.&#10;First player to guess correctly 5 words wins!&#10;After each try, the color of the tiles will change to show how close it was.&#10;" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="44.0" layoutY="594.0" prefHeight="20.0" prefWidth="173.0" text="Choose your username:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

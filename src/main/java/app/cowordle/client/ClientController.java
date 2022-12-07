@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -20,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -42,6 +44,8 @@ public class ClientController implements Initializable {
     private VBox vbox_messages;
     @FXML
     private ScrollPane sp_main;
+    @FXML
+    private Label lbl_inputValidation;
 //    @FXML
 //    private ImageView imageView_logo;
     private Client client;
@@ -83,24 +87,31 @@ public class ClientController implements Initializable {
 
         this.button_send.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
-                String inputText = ClientController.this.tf_message.getText();
-                if (!inputText.isEmpty() && inputText.length() == 5) { //TODO: Support variable length
-//                    HBox hBox = new HBox();
-//                    hBox.setAlignment(Pos.CENTER_RIGHT);
-//                    hBox.setPadding(new Insets(5.0, 5.0, 5.0, 10.0));
-//                    Text text = new Text(messageToSend);
-//                    TextFlow textFlow = new TextFlow(new Node[]{text});
-//                    textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: rgb(15, 125, 242); -fx-background-radius: 20px;");
-//                    textFlow.setPadding(new Insets(5.0, 10.0, 5.0, 10.0));
-//                    text.setFill(Color.color(0.934, 0.945, 0.996));
-//                    hBox.getChildren().add(textFlow);
-//                    ClientController.this.vbox_messages.getChildren().add(hBox);
-
-                    ClientController.this.client.sendMessageToServer(inputText);
-                    ClientController.this.tf_message.clear();
+                lbl_inputValidation.setVisible(false);
+                String inputText = tf_message.getText();
+                if (!inputText.isEmpty() && inputText.length() == 5) {
+                    boolean isValidPattern = Pattern.compile("[A-Za-z]{5}").matcher(inputText).matches();
+                    if(isValidPattern) {
+                        client.sendMessageToServer(inputText);
+                        tf_message.clear();
+                    } else {
+                        tf_message.clear();
+                        showInputValidationLabel("Please insert only a-z characters");
+                    }
                 } else {
-                    //TODO: error message input word lenght invalid
+                    showInputValidationLabel("Please insert a word with 5 letters");
                 }
+            }
+        });
+    }
+
+    public void showInputValidationLabel(String text) { //TODO: SEEMS IS NOT WORKING, DOESNT UPDATE UI
+        Platform.runLater(new Runnable() {
+            public void run()
+            {
+                ClientController.this.lbl_inputValidation.setText(text);
+                ClientController.this.lbl_inputValidation.setVisible(true);
+                ClientController.this.tf_message.clear();
             }
         });
     }
@@ -129,7 +140,7 @@ public class ClientController implements Initializable {
             {
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.CENTER);
-                hBox.setPadding(new Insets(10, 0, 0, 5));
+                hBox.setPadding(new Insets(10, 0, 0, 2));
                 hBox.setSpacing(8);
 
                 char[] inputWordArray = inputWord.toCharArray();
@@ -138,15 +149,14 @@ public class ClientController implements Initializable {
                     char inputChar = inputWordArray[i];
                     char resultChar = resultFromServerArray[i];
 
-                    hBox.getChildren().add(getTextFlowFromChar(inputChar, resultChar));
+                    hBox.getChildren().add(getLetterTileTextFlow(inputChar, resultChar));
                 }
-
                 ClientController.this.vbox_messages.getChildren().add(hBox);
             }
         });
     }
 
-    public TextFlow getTextFlowFromChar(char answerChar, char resultChar) {
+    public TextFlow getLetterTileTextFlow(char answerChar, char resultChar) {
         Text text = new Text(String.valueOf(answerChar).toUpperCase());
         TextFlow textFlow = new TextFlow(new Node[]{text});
         textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: " + getRgbColorStringFromChar(resultChar) +"; -fx-background-radius: 12px;");
@@ -155,9 +165,9 @@ public class ClientController implements Initializable {
         text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 85));
 
         textFlow.setMinHeight(115.0);
-        textFlow.setMinWidth(90.0);
+        textFlow.setMinWidth(93.0);
         textFlow.setMaxHeight(115.0);
-        textFlow.setMaxWidth(90.0);
+        textFlow.setMaxWidth(93.0);
 
         textFlow.setTextAlignment(TextAlignment.CENTER);
         System.out.println(textFlow.getTextAlignment().name());

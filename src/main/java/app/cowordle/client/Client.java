@@ -55,6 +55,7 @@ public class Client {
 
                         if(!isMyTurn) {
                             System.out.println("Is not my turn! i cant send this message to the server");
+                            controller.showInputValidationLabel("Is not your turn!");
                             continue;
                         }
 
@@ -124,7 +125,7 @@ public class Client {
             Gson gson = new Gson();
             if(!isMyTurn) {
                 System.out.println("Is not my turn! i cant send this message to the server");
-                //TODO: visible in ui "is not your turn!"
+                //TODO: visible in ui "is not your turn!" or some other indicator for the user to know its their turn
                 return;
             }
 

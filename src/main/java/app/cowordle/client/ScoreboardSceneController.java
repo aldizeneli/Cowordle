@@ -25,7 +25,8 @@ public class ScoreboardSceneController {
     private Label lbl_player2score;
     @FXML
     private Button btn_replay;
-
+    @FXML
+    private Button btn_close;
 
     private Stage stage;
     private Scene scene;

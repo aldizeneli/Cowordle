@@ -23,7 +23,7 @@ public class UsernameSceneController {
     private Scene scene;
     private Parent root;
 
-    public void login(ActionEvent event) throws IOException { //todo: rename login to something else
+    public void login(ActionEvent event) throws IOException { //TODO: rename login to something else
 
         String inputUsername = this.tf_username.getText();
         if(inputUsername == null || inputUsername.isEmpty())

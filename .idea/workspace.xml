@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-miglioramenti ui">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/1st-prize-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/2nd-prize-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/rules.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/scoreboard-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/username-view.fxml" afterDir="false" />
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-new scene for game rules and username selection&#10;-new scene for endgame scoreboard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670407202197</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="-new scene for game rules and username selection&#10;-new scene for endgame scoreboard">
+      <created>1670429969333</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1670429969333</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -217,7 +221,8 @@
     <MESSAGE value="-miglioramenti interfaccia" />
     <MESSAGE value="-mostriamo parola inserita da client al posto della sigla colore&#10;-lettere hanno background di dimensione fissa e sono centrate" />
     <MESSAGE value="-miglioramenti ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="-miglioramenti ui" />
+    <MESSAGE value="-new scene for game rules and username selection&#10;-new scene for endgame scoreboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="-new scene for game rules and username selection&#10;-new scene for endgame scoreboard" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

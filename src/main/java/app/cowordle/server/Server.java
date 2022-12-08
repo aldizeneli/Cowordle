@@ -19,6 +19,7 @@ public class Server {
     private int currentTurnUserIndex;
     private String currentWord;
     private boolean gameInProgress;
+    public static final int MAX_NUM_OF_PLAYERS = 2;
 
     public Server(ServerSocket serverSocket) {
 
@@ -30,14 +31,11 @@ public class Server {
             System.out.println("Server avviato...");
             int numOfClients = 0;
 
-            while(!serverSocket.isClosed() && numOfClients < 2) {
+            while(!serverSocket.isClosed() && numOfClients < MAX_NUM_OF_PLAYERS) {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected");
                 ClientHandler clientHandler = new ClientHandler(socket);
                 clientHandlers.add(clientHandler);
-
-//				Thread thread = new Thread(clientHandler);
-//				thread.start();
 
                 listenForMessage(clientHandler);
                 numOfClients++;
@@ -79,6 +77,13 @@ public class Server {
                     try {
                         msgFromClient = clientHandler.bufferedReader.readLine();
                         Message message = gson.fromJson(msgFromClient, Message.class);
+
+                        //TODO: finish heartbeat management
+                        if(message.action == ActionType.HEARTBEAT) {
+                            System.out.println("Heartbeat from: " + message.username);
+                            continue;
+                        }
+
 
                         if(message.username.equals(currentTurnUsername)) {
                             System.out.println(message.message + " " + message.username);

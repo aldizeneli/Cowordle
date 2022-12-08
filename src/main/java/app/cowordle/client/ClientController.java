@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import app.cowordle.shared.ActionType;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -46,8 +47,6 @@ public class ClientController implements Initializable {
     private ScrollPane sp_main;
     @FXML
     private Label lbl_inputValidation;
-//    @FXML
-//    private ImageView imageView_logo;
     private Client client;
 
     private Stage stage;
@@ -62,15 +61,10 @@ public class ClientController implements Initializable {
     public void initializeGameStage(String username) {
 
         try {
-//            Scanner scanner = new Scanner(System.in);
-//            System.out.println("Enter your username for the game: ");
-//            String username = scanner.nextLine();
             Socket socket = new Socket("localhost", 1234);
             this.client = new Client(socket, username, this);
 
-            //avvio i thread (sarebbero operazioni bloccanti altrimenti)
-            client.listenForMessage();
-            client.sendMessage();
+
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,7 +75,7 @@ public class ClientController implements Initializable {
         this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
-                ClientController.this.sp_main.setVvalue((Double)newVal);
+                sp_main.setVvalue((Double)newVal);
             }
         });
 
@@ -89,10 +83,10 @@ public class ClientController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 lbl_inputValidation.setVisible(false);
                 String inputText = tf_message.getText();
-                if (!inputText.isEmpty() && inputText.length() == 5) {
+                if (inputText.length() == 5) {
                     boolean isValidPattern = Pattern.compile("[A-Za-z]{5}").matcher(inputText).matches();
                     if(isValidPattern) {
-                        client.sendMessageToServer(inputText);
+                        client.sendMessageToServer(inputText, ActionType.WORDGUESS);
                         tf_message.clear();
                     } else {
                         tf_message.clear();
@@ -170,13 +164,11 @@ public class ClientController implements Initializable {
         textFlow.setMaxWidth(93.0);
 
         textFlow.setTextAlignment(TextAlignment.CENTER);
-        System.out.println(textFlow.getTextAlignment().name());
         return textFlow;
     }
 
     public String getRgbColorStringFromChar(char answerChar) {
         String rgbValue = "";
-        System.out.println(answerChar);
         switch (answerChar) {
            case 'g':
                rgbValue = "25, 179, 33";
@@ -188,7 +180,6 @@ public class ClientController implements Initializable {
                rgbValue = "224, 18, 66";
                break;
         }
-        System.out.println(rgbValue);
         return "rgb(" + rgbValue + ")";
     }
 

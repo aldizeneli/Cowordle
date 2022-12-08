@@ -10,5 +10,6 @@ public enum ActionType {
     WORDGUESSRESULT,
     WORDGUESSED,
     GAMEEND,
-    PLAYERLEFT
+    PLAYERLEFT,
+    HEARTBEAT
 }

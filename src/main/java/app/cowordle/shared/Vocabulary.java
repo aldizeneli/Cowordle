@@ -31,9 +31,6 @@ public class Vocabulary {
 
     public String getWord() {
         int randomIndex = (int)(Math.random() * vocabulary.toArray().length);
-        System.out.println(randomIndex);
-        System.out.println(vocabulary.toArray().length );
-        System.out.println(vocabulary.get(0).value);
         Word wordToGuess = vocabulary.get(randomIndex);
         vocabulary.remove(randomIndex);
         return wordToGuess.value.toLowerCase();

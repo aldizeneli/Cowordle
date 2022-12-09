@@ -3,6 +3,8 @@ package app.cowordle.client;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 public class ClientApplication extends javafx.application.Application {
 
@@ -28,6 +31,14 @@ public class ClientApplication extends javafx.application.Application {
         stage.setMaxWidth(STAGE_WIDTH);
         stage.setMinHeight(STAGE_HEIGHT);
         stage.setMinWidth(STAGE_WIDTH);
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
 
 //        stage.initStyle(StageStyle.TRANSPARENT);
 //        scene.setFill(Color.TRANSPARENT);

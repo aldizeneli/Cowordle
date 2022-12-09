@@ -24,7 +24,8 @@ public class Client {
     private String username;
     private boolean isMyTurn;
     private ClientController controller;
-    private boolean gameStarted;
+    private boolean gameInProgress;
+    private boolean gameEnded;
 
     public Client(Socket socket, String username, ClientController controller) {
         try {
@@ -39,7 +40,6 @@ public class Client {
             //client.sendMessage();
             sendMessageToServer(username, ActionType.CLIENTREGISTRATION);
             startHeartbeatSystem();
-
         } catch(IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
@@ -53,7 +53,12 @@ public class Client {
                 timer.schedule( new TimerTask() {
                     @Override
                     public void run() {
-                        sendMessageToServer(username, ActionType.HEARTBEAT);
+                        if(!gameEnded)
+                            sendMessageToServer(username, ActionType.HEARTBEAT);
+                        else {
+                            timer.cancel();
+                            timer.purge();
+                        }
                     }
                 }, 0, 3000);
             }
@@ -67,10 +72,14 @@ public class Client {
             public void run() {
                 String msgFromServer;
                 Gson gson = new Gson();
-                while(socket.isConnected()) {
+                while(socket.isConnected() && !gameEnded) {
                     try {
                         msgFromServer = bufferedReader.readLine();
                         Message message = gson.fromJson(msgFromServer, Message.class);
+
+                        if(message == null)
+                            continue;
+
                         System.out.println(message.message + "  " + message.action);
 
                         if(message.action == ActionType.TURNCHANGE) {
@@ -81,28 +90,29 @@ public class Client {
                                 isMyTurn = false;
 
                             //TODO: unlock ui to insert values
-                        } else if(message.action == ActionType.SERVERINFO) {
+                        } else if(message.action == ActionType.SERVERINFO) { //TODO: REMOVE?
 
                         } else if(message.action == ActionType.GAMESTART) {
-                            gameStarted = true;
+                            gameInProgress = true;
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-                            controller.initializeNewTurn(message.additionalInfo);
+                            controller.initializeNewTurn("Your opponent guessed right the word: " + message.additionalInfo, false);
                         }  else if(message.action == ActionType.GAMEEND) {
-                            if(message.message.equals(username)) {
-                                //TODO: mostrare popup con "congratulazioni, hai vinto"
-                            } else {
-                                //TODO: mostrare popup con "mi dispiace, hai perso"
-                            }
+                            isMyTurn = false;
+                            gameEnded = true;
+                            controller.initializeNewTurn("GAME OVER!", true);
                         } else if(message.action == ActionType.PLAYERLEFT) {
-                            //TODO: vittoria a tavolino quando avversario ha abbandonato
+                            isMyTurn = false;
+                            gameEnded = true;
+                            controller.initializeNewTurn("Your opponent left the game!", true);
                         }
 
                     } catch(IOException e) {
                         closeEverything(socket, bufferedReader, bufferedWriter);
                     }
                 }
+                System.out.println("client exit listenMessage thread: " + username);
             }
         }).start();
     }

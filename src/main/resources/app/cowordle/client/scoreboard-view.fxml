@@ -41,7 +41,7 @@
             <Image url="@../assets/2nd-prize-icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="btn_replay" layoutX="122.0" layoutY="618.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="139.0" text="Play again">
+      <Button fx:id="btn_replay" onAction="#goToGameScene" layoutX="122.0" layoutY="618.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="139.0" text="Play again">
          <font>
             <Font size="14.0" />
          </font></Button>

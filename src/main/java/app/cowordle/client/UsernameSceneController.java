@@ -1,6 +1,8 @@
 package app.cowordle.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -32,14 +35,21 @@ public class UsernameSceneController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));
         root = loader.load();
 
-        ClientController scene2Controller = loader.getController();
+        ClientController gameSceneController = loader.getController();
 
-        scene2Controller.initializeGameStage(inputUsername);
+        gameSceneController.initializeGameStage(inputUsername);
 
         //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         stage.show();
     }
 }

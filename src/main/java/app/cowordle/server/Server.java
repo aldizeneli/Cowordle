@@ -4,7 +4,11 @@ package app.cowordle.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Vocabulary;
@@ -19,40 +23,48 @@ public class Server {
     private int currentTurnUserIndex;
     private String currentWord;
     private boolean gameInProgress;
+    private boolean waitingPlayers;
     public static final int MAX_NUM_OF_PLAYERS = 2;
+    public static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
 
     public Server(ServerSocket serverSocket) {
-
         this.serverSocket = serverSocket;
+
+        //start monitoring client connections only after game start
+        monitorClientsConnection();
     }
 
     public void startServer() {
         try {
             System.out.println("Server avviato...");
-            int numOfClients = 0;
+            waitingPlayers = true;
+            gameInProgress = false;
 
-            while(!serverSocket.isClosed() && numOfClients < MAX_NUM_OF_PLAYERS) {
+            while(!serverSocket.isClosed() && clientHandlers.size() < MAX_NUM_OF_PLAYERS) {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected");
                 ClientHandler clientHandler = new ClientHandler(socket);
                 clientHandlers.add(clientHandler);
 
                 listenForMessage(clientHandler);
-                numOfClients++;
 
-                broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + numOfClients, ActionType.SERVERINFO, null);
+                broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + clientHandlers.size(), ActionType.SERVERINFO, null);
             }
-
-            startGame();
+            waitingPlayers = false;
+            initializeNewGame();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void startGame() {
+    private void initializeNewGame() {
         System.out.println("All ready, starting game...");
         broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo", ActionType.GAMESTART, null);
+
+//        for (ClientHandler client: clientHandlers) {
+//            client.resetScore();
+//        }
 
         this.gameInProgress = true;
 
@@ -67,65 +79,106 @@ public class Server {
         System.out.println("word to guess: " + currentWord);
     }
 
+    private void monitorClientsConnection() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Timer timer = new Timer();
+                timer.schedule( new TimerTask() {
+                    @Override
+                    public void run() {
+                        ArrayList<ClientHandler> disconnectedClients = new ArrayList<>();
+                        for (ClientHandler clientHandler:clientHandlers) {
+                            long secondsSinceLastHeartbeat = (new Date().getTime() - clientHandler.lastHeartbeatDate.getTime()) / 1000;
+
+                            if (secondsSinceLastHeartbeat > HEARTBEAT_TOLERANCE_SECONDS) {
+                                System.out.println("client disconnected: " + clientHandler.clientUsername);
+                                clientHandler.closeEverything();
+                                disconnectedClients.add(clientHandler);
+                            }
+                        }
+                        if(disconnectedClients.size() > 0) {
+                            clientHandlers.removeAll(disconnectedClients);
+                            if(gameInProgress)
+                                manageEndGame(ActionType.PLAYERLEFT);
+                        }
+                    }
+                }, 0, 2000);
+            }
+        }).start();
+    }
+
     private void listenForMessage(ClientHandler clientHandler) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String msgFromClient;
                 Gson gson = new Gson();
-                while(clientHandler.socket.isConnected()) {
+                while(clientHandler.socket.isConnected() && !clientHandler.gameEnded) {
                     try {
                         msgFromClient = clientHandler.bufferedReader.readLine();
                         Message message = gson.fromJson(msgFromClient, Message.class);
+                        boolean isClientsTurn = message.username.equals(currentTurnUsername);
 
-                        //TODO: finish heartbeat management
+                        //heartbeat management
                         if(message.action == ActionType.HEARTBEAT) {
                             System.out.println("Heartbeat from: " + message.username);
+                            clientHandler.lastHeartbeatDate = new Date();
                             continue;
                         }
 
+                        if(isClientsTurn && gameInProgress) {
+                            String result = getAnswerEvaluation(message);
+                            if(wordCorrectlyGuessed(result))
+                                manageWordGuessed(result, clientHandler);
+                            else
+                                broadcastMessage(message.message, ActionType.WORDGUESSRESULT, result);
 
-                        if(message.username.equals(currentTurnUsername)) {
-                            System.out.println(message.message + " " + message.username);
-
-                            if(gameInProgress) {
-                                String result = getAnswerEvaluation(message);
-
-                                System.out.println("1 - " + result + "  -  " + message.message);
-
-                                if(result.equals(("ggggg"))) { //parola indovinata todo: migliorare
-                                    clientHandler.incrementScore();
-                                    broadcastMessage(result, ActionType.WORDGUESSED, null);
-
-                                    if(clientHandler.isWinner()) {
-
-                                        broadcastMessage(clientHandler.clientUsername, ActionType.GAMEEND, null);
-
-                                        //TODO: operazioni di chiusura partita lato server (ricominciare partita se possibile,
-                                        // cioè se i client sn ancora connessi dopo 30 sec (lo capisci dal heartbeat quando lo implementi))
-                                    }
-                                }
-                                else {
-                                    broadcastMessage(message.message, ActionType.WORDGUESSRESULT, result);
-                                }
-                            }
-
-                            currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
-                            currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
-                            broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
-                        }
-                        else
-                            System.out.println("messaggio rifiutato");
-
+                            setNextTurnPlayer();
+                        } else
+                            System.out.println("message refused from " + clientHandler.clientUsername);
 
                     } catch(IOException e) {
-
+//                        e.printStackTrace();
                     }
                 }
-                //todo: make it work (implement a heartbeat system OR after x seconds without receivent messages from a client, consider it disconnected)
-                System.out.println("A user disconnected");
+                System.out.println("ListenForMessage thread exit for " + clientHandler.clientUsername);
+            }
+
+            private boolean wordCorrectlyGuessed(String result) {
+                return result.equals(("ggggg"));
             }
         }).start();
+    }
+
+    private void setNextTurnPlayer() {
+        if(clientHandlers.size() == MAX_NUM_OF_PLAYERS) {
+            currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
+            currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
+            broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
+        }
+    }
+
+    private void manageWordGuessed(String result, ClientHandler clientHandler) {
+        clientHandler.incrementScore();
+        if(clientHandler.isWinner()) {
+            manageEndGame(ActionType.GAMEEND);
+        } else {
+            broadcastMessage(result, ActionType.WORDGUESSED, null);
+        }
+    }
+
+    private void manageEndGame(ActionType actionType) {
+        broadcastMessage(null, actionType, null);
+        endCurrentGame();
+        startServer();
+    }
+
+    private static void endCurrentGame() {
+        for (ClientHandler client: clientHandlers) {
+            client.closeEverything();
+        }
+        clientHandlers.clear();
     }
 
     private String getAnswerEvaluation(Message message) {
@@ -143,7 +196,6 @@ public class Server {
                 answer.append('r');
             }
         }
-        System.out.println("guess result: " + answer);
         return answer.toString();
     }
 

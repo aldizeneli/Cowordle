@@ -54,17 +54,14 @@ public class ClientController implements Initializable {
     private Parent root;
 
 
-    public ClientController() {
+    public ClientController() { //TODO: rename GameSceneController
     }
 
 
     public void initializeGameStage(String username) {
-
         try {
             Socket socket = new Socket("localhost", 1234);
             this.client = new Client(socket, username, this);
-
-
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -183,46 +180,62 @@ public class ClientController implements Initializable {
         return "rgb(" + rgbValue + ")";
     }
 
-    public void initializeNewTurn(String wordGuessed) {
+    public void initializeNewTurn(String dialogText, boolean goToScoreStage) {
         Platform.runLater(new Runnable() {
+            //TODO: now both players see the message even if only the one that didnt guess the word should, make it generic
             public void run()
             {
-                showInfoPopup(wordGuessed);
+                showInfoPopup(dialogText, goToScoreStage);
             }
         });
     }
 
-    private void showInfoPopup(String wordGuessed) {
+    private void showInfoPopup(String dialogText, boolean goToScoreStage) {
         //TODO: try to initialize popup only once during startup and here just do myDialog.show();
-        Stage myDialog = new Stage();
-        myDialog.initModality(Modality.WINDOW_MODAL);
-        myDialog.setTitle("Info");
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.setTitle("Info");
 
         Button okButton = new Button("Ok");
         okButton.setMaxWidth(40.0);
         okButton.setMinWidth(40.0);
-        okButton.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent arg0) {
-                myDialog.close();
-                ClientController.this.vbox_messages.getChildren().clear();
-                button_send.setDisable(false);
 
-                //TODO: da chiamare solo se partita finita, non ad ogni parola indovinata
-                loadScoreboardScene("player 1", 5, "Player 2", 4 );
-            }
-        });
+        if(goToScoreStage)
+            okButton.setOnAction(new EventHandler<ActionEvent>(){
+                @Override
+                public void handle(ActionEvent arg0) {
+                    dialogStage.close();
+                    goToScoreStage();
+                }
+            });
+        else
+            okButton.setOnAction(new EventHandler<ActionEvent>(){
+                @Override
+                public void handle(ActionEvent arg0) {
+                    dialogStage.close();
+                    clearBoard();
+                }
+            });
 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
         vbox.setSpacing(25);
-        vbox.getChildren().add(new Text("Your opponent guessed right the word: " + wordGuessed));
+        vbox.getChildren().add(new Text(dialogText));
         vbox.getChildren().add(okButton);
 
         Scene myDialogScene = new Scene(vbox);
-        myDialog.setScene(myDialogScene);
-        myDialog.show();
+        dialogStage.setScene(myDialogScene);
+        dialogStage.show();
         button_send.setDisable(true);
+    }
+
+    private void clearBoard() {
+        ClientController.this.vbox_messages.getChildren().clear();
+        button_send.setDisable(false);
+    }
+
+    private void goToScoreStage() {
+        loadScoreboardScene("player 1", 5, "Player 2", 4 );
     }
 }

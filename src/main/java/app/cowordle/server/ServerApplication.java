@@ -5,10 +5,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class ServerApplication extends javafx.application.Application {
+public class ServerApplication {
     public ServerApplication() {  }
-
-    public void start(Stage stage) {  }
 
     public static void main(String[] args) {
         try {

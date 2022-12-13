@@ -37,7 +37,9 @@ public class ScoreboardSceneController implements Initializable {
     private Button btn_replay;
     @FXML
     private Button btn_close;
+    private String username;
 
+    //TODO: REMOVE
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -70,7 +72,7 @@ public class ScoreboardSceneController implements Initializable {
             stage.setScene(scene);
 
             ClientController gameSceneController = loader.getController();
-            gameSceneController.initializeGameStage("aldi"); //TODO: FARSI ARRIVARE QUI L USERNAME CORRENTE E USARE QUELLO
+            gameSceneController.initializeGameStage(this.username); //TODO: FARSI ARRIVARE QUI L USERNAME CORRENTE E USARE QUELLO
 
 //            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 //                @Override
@@ -85,7 +87,9 @@ public class ScoreboardSceneController implements Initializable {
         }
     }
 
-    public void initializeScoreboardStage(String player1username, int player1score, String player2username, int player2score) {
+    public void initializeScoreboardStage(String player1username, int player1score, String player2username, int player2score, String username) {
+        this.username = username;
+
         lbl_player1username.setText(player1username);
         lbl_player1score.setText(String.valueOf(player1score));
 

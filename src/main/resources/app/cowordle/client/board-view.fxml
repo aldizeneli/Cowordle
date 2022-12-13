@@ -13,7 +13,7 @@
                 <VBox fx:id="vbox_messages" prefHeight="490.0" prefWidth="470.0" />
             </content>
         </ScrollPane>
-      <ImageView fx:id="imageView_logo" fitHeight="89.0" fitWidth="116.0" layoutX="217.0" layoutY="14.0" pickOnBounds="true">
+      <ImageView fx:id="imageView_logo" fitHeight="80.0" fitWidth="140.0" layoutX="213.0" layoutY="14.0" pickOnBounds="true">
          <image>
             <Image url="@../assets/app-logo.png" />
          </image></ImageView>

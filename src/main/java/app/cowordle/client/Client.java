@@ -97,15 +97,15 @@ public class Client {
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-                            controller.initializeNewTurn("Your opponent guessed right the word: " + message.additionalInfo, false);
+                            controller.showPopUp("Your opponent guessed right the word: " + message.additionalInfo, false);
                         }  else if(message.action == ActionType.GAMEEND) {
                             isMyTurn = false;
                             gameEnded = true;
-                            controller.initializeNewTurn("GAME OVER!", true);
+                            controller.showPopUp("GAME OVER!", true);
                         } else if(message.action == ActionType.PLAYERLEFT) {
                             isMyTurn = false;
                             gameEnded = true;
-                            controller.initializeNewTurn("Your opponent left the game!", true);
+                            controller.showPopUp("Your opponent left the game!", true);
                         }
 
                     } catch(IOException e) {
@@ -152,5 +152,9 @@ public class Client {
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 }

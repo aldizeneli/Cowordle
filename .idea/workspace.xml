@@ -4,18 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-scheletro per l'heartbeat sysyem&#10;-refactoring intenso">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-finito heartbeat system&#10;-finita gestione disconessione client&#10;-finito sistema di nuova partita dopo vittoria">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/scoreboard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/scoreboard-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/app-logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/app-logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/server/vocabulary.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/server/vocabulary.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670501522460</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="-finito heartbeat system&#10;-finita gestione disconessione client&#10;-finito sistema di nuova partita dopo vittoria">
+      <created>1670617665923</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1670617665923</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,7 +245,8 @@
     <MESSAGE value="-new scene for game rules and username selection&#10;-new scene for endgame scoreboard" />
     <MESSAGE value="-regex per accettare solo a-z in input&#10;-label per validare input sull invio" />
     <MESSAGE value="-scheletro per l'heartbeat sysyem&#10;-refactoring intenso" />
-    <option name="LAST_COMMIT_MESSAGE" value="-scheletro per l'heartbeat sysyem&#10;-refactoring intenso" />
+    <MESSAGE value="-finito heartbeat system&#10;-finita gestione disconessione client&#10;-finito sistema di nuova partita dopo vittoria" />
+    <option name="LAST_COMMIT_MESSAGE" value="-finito heartbeat system&#10;-finita gestione disconessione client&#10;-finito sistema di nuova partita dopo vittoria" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

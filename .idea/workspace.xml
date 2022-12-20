@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-sistemato logo progetto&#10;-passato username client a stage punteggio per ricollegarsi con stesso username&#10;-gestita chiusura della popup di info senza che rompa il workflow">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-logica turno con guid al posto di username">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670950034666</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="-logica turno con guid al posto di username">
+      <created>1671549869027</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1671549869027</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,7 +259,8 @@
     <MESSAGE value="-scheletro per l'heartbeat sysyem&#10;-refactoring intenso" />
     <MESSAGE value="-finito heartbeat system&#10;-finita gestione disconessione client&#10;-finito sistema di nuova partita dopo vittoria" />
     <MESSAGE value="-sistemato logo progetto&#10;-passato username client a stage punteggio per ricollegarsi con stesso username&#10;-gestita chiusura della popup di info senza che rompa il workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="-sistemato logo progetto&#10;-passato username client a stage punteggio per ricollegarsi con stesso username&#10;-gestita chiusura della popup di info senza che rompa il workflow" />
+    <MESSAGE value="-logica turno con guid al posto di username" />
+    <option name="LAST_COMMIT_MESSAGE" value="-logica turno con guid al posto di username" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -26,12 +26,16 @@ public class ClientHandler {
             this.bufferedWriter = new BufferedWriter (new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             this.lastHeartbeatDate = new Date();
-            getUsernameFromClient();
-            sendGuidToClient();
-
+            this.guid = String.valueOf(java.util.UUID.randomUUID());
+            handshake();
         } catch(IOException e) {
             closeEverything();
         }
+    }
+
+    private void handshake() {
+        getUsernameFromClient();
+        sendGuidToClient(this.guid);
     }
 
     private void getUsernameFromClient()  {
@@ -46,11 +50,9 @@ public class ClientHandler {
         }
     }
 
-    private void sendGuidToClient()  {
+    private void sendGuidToClient(String guid)  {
         try {
             Gson gson = new Gson();
-            String guid = String.valueOf(java.util.UUID.randomUUID());
-
             Message messageObject = new Message(guid, "server", ActionType.CLIENTREGISTRATION, null);
             String message = gson.toJson(messageObject);
 

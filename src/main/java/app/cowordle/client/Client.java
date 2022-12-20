@@ -38,7 +38,6 @@ public class Client {
 
             //avvio i thread (sarebbero operazioni bloccanti altrimenti)
             listenForMessage();
-            //client.sendMessage();
             sendMessageToServer(username, ActionType.CLIENTREGISTRATION);
             startHeartbeatSystem();
         } catch(IOException e) {
@@ -84,7 +83,7 @@ public class Client {
                         //System.out.println(message.message + "  " + message.action);
 
                         if(message.action == ActionType.TURNCHANGE) {
-                            if(message.message.equals(username)) {
+                            if(message.message.equals(guid)) {
                                 System.out.println("è il mio turno!");
                                 isMyTurn = true;
                             } else
@@ -129,7 +128,7 @@ public class Client {
                 return;
             }
 
-            Message messageObject = new Message(messageInput, username, actionType, null);
+            Message messageObject = new Message(messageInput, guid, actionType, null);
             String message = gson.toJson(messageObject);
             //System.out.println(message);
 

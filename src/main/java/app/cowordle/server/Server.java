@@ -18,7 +18,7 @@ import app.cowordle.shared.Message;
 public class Server {
     private ServerSocket serverSocket;
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
-    private String currentTurnUsername;
+    private String currentTurnClientGuid;
     private String currentWord;
     private boolean gameInProgress;
     private boolean waitingPlayers;
@@ -111,7 +111,6 @@ public class Server {
                     try {
                         msgFromClient = clientHandler.bufferedReader.readLine();
                         Message message = gson.fromJson(msgFromClient, Message.class);
-                        boolean isClientsTurn = message.username.equals(currentTurnUsername);
 
                         //heartbeat management
                         if(message.action == ActionType.HEARTBEAT) {
@@ -120,16 +119,19 @@ public class Server {
                             continue;
                         }
 
-                        if(isClientsTurn && gameInProgress) {
-                            String result = getAnswerEvaluation(message);
-                            if(wordCorrectlyGuessed(result))
-                                manageWordGuessed(result, clientHandler);
-                            else
+                        if(gameInProgress) {
+                            boolean isClientsTurn = message.guid.equals(currentTurnClientGuid);
+                            if (isClientsTurn) {
+                                String result = getAnswerEvaluation(message);
                                 broadcastMessage(message.message, ActionType.WORDGUESSRESULT, result);
 
-                            setNextTurnPlayer();
-                        } else
-                            System.out.println("message refused from " + clientHandler.username);
+                                if (wordCorrectlyGuessed(result))
+                                    manageWordGuessed(result, clientHandler);
+
+                                setNextTurnPlayer();
+                            } else
+                                System.out.println("message refused from " + clientHandler.username);
+                        }
 
                     } catch(IOException e) {
 //                        e.printStackTrace();
@@ -146,8 +148,8 @@ public class Server {
 
     private void setNextTurnPlayer() {
         currentTurnUserIndex = currentTurnUserIndex == MAX_NUM_OF_PLAYERS - 1 ? 0 : currentTurnUserIndex + 1;
-        currentTurnUsername = clientHandlers.get(currentTurnUserIndex).username;
-        broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
+        currentTurnClientGuid = clientHandlers.get(currentTurnUserIndex).guid;
+        broadcastMessage(currentTurnClientGuid, ActionType.TURNCHANGE, null);
     }
 
     private void manageWordGuessed(String result, ClientHandler clientHandler) {

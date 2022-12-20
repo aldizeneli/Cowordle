@@ -4,7 +4,6 @@ package app.cowordle.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
@@ -20,10 +19,10 @@ public class Server {
     private ServerSocket serverSocket;
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private String currentTurnUsername;
-    private int currentTurnUserIndex;
     private String currentWord;
     private boolean gameInProgress;
     private boolean waitingPlayers;
+    private int currentTurnUserIndex;
     public static final int MAX_NUM_OF_PLAYERS = 2;
     public static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
 
@@ -48,7 +47,7 @@ public class Server {
 
                 listenForMessage(clientHandler);
 
-                broadcastMessage("SERVER: Si è collegato " + clientHandler.clientUsername +". Num di utenti: " + clientHandlers.size(), ActionType.SERVERINFO, null);
+                broadcastMessage("SERVER: Si è collegato " + clientHandler.username +". Num di utenti: " + clientHandlers.size(), ActionType.SERVERINFO, null);
             }
             waitingPlayers = false;
             initializeNewGame();
@@ -62,16 +61,10 @@ public class Server {
         System.out.println("All ready, starting game...");
         broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo", ActionType.GAMESTART, null);
 
-//        for (ClientHandler client: clientHandlers) {
-//            client.resetScore();
-//        }
-
         this.gameInProgress = true;
 
-        currentTurnUserIndex = 0;
-        currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
-
-        broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
+        this.currentTurnUserIndex = MAX_NUM_OF_PLAYERS-1;
+        setNextTurnPlayer();
 
         Vocabulary vocabulary = new Vocabulary();
         currentWord = vocabulary.getWord();
@@ -92,7 +85,7 @@ public class Server {
                             long secondsSinceLastHeartbeat = (new Date().getTime() - clientHandler.lastHeartbeatDate.getTime()) / 1000;
 
                             if (secondsSinceLastHeartbeat > HEARTBEAT_TOLERANCE_SECONDS) {
-                                System.out.println("client disconnected: " + clientHandler.clientUsername);
+                                System.out.println("client disconnected: " + clientHandler.username);
                                 clientHandler.closeEverything();
                                 disconnectedClients.add(clientHandler);
                             }
@@ -122,7 +115,7 @@ public class Server {
 
                         //heartbeat management
                         if(message.action == ActionType.HEARTBEAT) {
-                            System.out.println("Heartbeat from: " + message.username);
+                            //System.out.println("Heartbeat from: " + message.username);
                             clientHandler.lastHeartbeatDate = new Date();
                             continue;
                         }
@@ -136,13 +129,13 @@ public class Server {
 
                             setNextTurnPlayer();
                         } else
-                            System.out.println("message refused from " + clientHandler.clientUsername);
+                            System.out.println("message refused from " + clientHandler.username);
 
                     } catch(IOException e) {
 //                        e.printStackTrace();
                     }
                 }
-                System.out.println("ListenForMessage thread exit for " + clientHandler.clientUsername);
+                System.out.println("ListenForMessage thread exit for " + clientHandler.username);
             }
 
             private boolean wordCorrectlyGuessed(String result) {
@@ -152,11 +145,9 @@ public class Server {
     }
 
     private void setNextTurnPlayer() {
-        if(clientHandlers.size() == MAX_NUM_OF_PLAYERS) {
-            currentTurnUserIndex = currentTurnUserIndex == 0 ? 1 : 0;
-            currentTurnUsername = clientHandlers.get(currentTurnUserIndex).clientUsername;
-            broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
-        }
+        currentTurnUserIndex = currentTurnUserIndex == MAX_NUM_OF_PLAYERS - 1 ? 0 : currentTurnUserIndex + 1;
+        currentTurnUsername = clientHandlers.get(currentTurnUserIndex).username;
+        broadcastMessage(currentTurnUsername, ActionType.TURNCHANGE, null);
     }
 
     private void manageWordGuessed(String result, ClientHandler clientHandler) {
@@ -209,7 +200,6 @@ public class Server {
                 clientHandler.bufferedWriter.write(message);
                 clientHandler.bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
                 clientHandler.bufferedWriter.flush();
-//				}
             } catch(IOException e) {
                 //closeEverything(socket, bufferedReader, bufferedWriter);
             }

@@ -17,7 +17,6 @@ public class ClientHandler {
     private int score;
     public boolean gameEnded;
     public String guid;
-    public static final int MAX_SCORE = 1; //TODO: PUT BACK 5
 
     public ClientHandler(Socket socket) {
         try {
@@ -70,10 +69,6 @@ public class ClientHandler {
 
     public int getScore() {
         return this.score;
-    }
-
-    public boolean isWinner() {
-        return this.score >= MAX_SCORE;
     }
 
     public void resetScore() {

@@ -4,10 +4,7 @@ package app.cowordle.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Vocabulary;
@@ -25,6 +22,7 @@ public class Server {
     private int currentTurnUserIndex;
     public static final int MAX_NUM_OF_PLAYERS = 2;
     public static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
+    public static final int MAX_SCORE = 2; //TODO: PUT BACK 5
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -154,7 +152,7 @@ public class Server {
 
     private void manageWordGuessed(String result, ClientHandler clientHandler) {
         clientHandler.incrementScore();
-        if(clientHandler.isWinner()) {
+        if(clientHandler.getScore() == MAX_SCORE) {
             manageEndGame(ActionType.GAMEEND);
         } else {
             broadcastMessage(result, ActionType.WORDGUESSED, null);
@@ -162,7 +160,12 @@ public class Server {
     }
 
     private void manageEndGame(ActionType actionType) {
-        broadcastMessage(null, actionType, null);
+        StringBuilder stringBuilder = new StringBuilder();
+        for(ClientHandler clientHandler : clientHandlers) {
+            stringBuilder.append(clientHandler.username + ";" + clientHandler.getScore() + ";");
+        }
+
+        broadcastMessage(stringBuilder.toString(), actionType, null);
         endCurrentGame();
         startServer();
     }

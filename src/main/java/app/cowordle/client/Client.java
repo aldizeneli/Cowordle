@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
@@ -83,12 +81,11 @@ public class Client {
                         //System.out.println(message.message + "  " + message.action);
 
                         if(message.action == ActionType.TURNCHANGE) {
-                            if(message.message.equals(guid)) {
-                                System.out.println("è il mio turno!");
-                                isMyTurn = true;
-                            } else
-                                isMyTurn = false;
+                            isMyTurn = message.message.equals(guid);
 
+                            //TODO: remove
+                            if(isMyTurn)
+                                System.out.println("è il mio turno!");
                             //TODO: unlock ui to insert values
                         } else if(message.action == ActionType.SERVERINFO) { //TODO: REMOVE?
 
@@ -99,15 +96,12 @@ public class Client {
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-                            controller.showPopUp("Your opponent guessed right the word: " + message.additionalInfo, false);
-                        }  else if(message.action == ActionType.GAMEEND) {
+                            controller.showPopUp("Word guessed!", false, null);
+                        }  else if(message.action == ActionType.GAMEEND || message.action == ActionType.PLAYERLEFT) {
+                            String popupText = message.action == ActionType.GAMEEND ? "GAME OVER!" : "Your opponent left the game!";
                             isMyTurn = false;
                             gameEnded = true;
-                            controller.showPopUp("GAME OVER!", true);
-                        } else if(message.action == ActionType.PLAYERLEFT) {
-                            isMyTurn = false;
-                            gameEnded = true;
-                            controller.showPopUp("Your opponent left the game!", true);
+                            controller.showPopUp(popupText, true, message.message);
                         }
 
                     } catch(IOException e) {

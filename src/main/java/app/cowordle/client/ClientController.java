@@ -109,13 +109,13 @@ public class ClientController implements Initializable {
         });
     }
 
-    public void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score, String username)  {
+    public void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score, String currentClientUsername)  {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("scoreboard-view.fxml"));
             root = loader.load();
 
             ScoreboardSceneController scoreboardController = loader.getController();
-            scoreboardController.initializeScoreboardStage(player1username, player1score, player2username, player2score, username);
+            scoreboardController.initializeScoreboardStage(player1username, player1score, player2username, player2score, currentClientUsername);
 
             //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
             stage = (Stage) this.ap_main.getScene().getWindow();
@@ -182,17 +182,16 @@ public class ClientController implements Initializable {
         return "rgb(" + rgbValue + ")";
     }
 
-    public void showPopUp(String dialogText, boolean goToScoreStage) {
+    public void showPopUp(String dialogText, boolean goToScoreStage, String scores) {
         Platform.runLater(new Runnable() {
-            //TODO: now both players see the message even if only the one that didnt guess the word should, make it generic
             public void run()
             {
-                showDialogScene(dialogText, goToScoreStage);
+                showDialogScene(dialogText, goToScoreStage, scores);
             }
         });
     }
 
-    private void showDialogScene(String dialogText, boolean goToScoreStage) {
+    private void showDialogScene(String dialogText, boolean goToScoreStage, String scores) {
         //TODO: try to initialize popup only once during startup and here just do myDialog.show();
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -202,7 +201,7 @@ public class ClientController implements Initializable {
         okButton.setMaxWidth(40.0);
         okButton.setMinWidth(40.0);
 
-        registerDialogButtonActions(goToScoreStage, dialogStage, okButton);
+        registerDialogButtonActions(goToScoreStage, dialogStage, okButton, scores);
 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
@@ -217,13 +216,13 @@ public class ClientController implements Initializable {
         button_send.setDisable(true);
     }
 
-    private void registerDialogButtonActions(boolean goToScoreStage, Stage dialogStage, Button okButton) {
+    private void registerDialogButtonActions(boolean goToScoreStage, Stage dialogStage, Button okButton, String scores) {
         if(goToScoreStage) {
             okButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent arg0) {
                     dialogStage.close();
-                    goToScoreStage(client.getUsername());
+                    goToScoreStage(scores);
                 }
             });
 
@@ -231,7 +230,7 @@ public class ClientController implements Initializable {
                 @Override
                 public void handle(WindowEvent t) {
                     dialogStage.close();
-                    goToScoreStage(client.getUsername());
+                    goToScoreStage(scores);
                 }
             });
         }
@@ -259,7 +258,8 @@ public class ClientController implements Initializable {
         button_send.setDisable(false);
     }
 
-    private void goToScoreStage(String username) {
-        loadScoreboardScene("player 1", 5, "Player 2", 4, username);
+    private void goToScoreStage(String scores) {
+        String[] scoreArray = scores.split(";");
+        loadScoreboardScene(scoreArray[0], Integer.valueOf(scoreArray[1]), scoreArray[2], Integer.valueOf(scoreArray[3]), client.getUsername());
     }
 }

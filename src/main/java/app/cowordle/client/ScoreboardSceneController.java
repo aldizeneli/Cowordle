@@ -87,8 +87,8 @@ public class ScoreboardSceneController implements Initializable {
         }
     }
 
-    public void initializeScoreboardStage(String player1username, int player1score, String player2username, int player2score, String username) {
-        this.username = username;
+    public void initializeScoreboardStage(String player1username, int player1score, String player2username, int player2score, String currentClientUsername) {
+        this.username = currentClientUsername;
 
         lbl_player1username.setText(player1username);
         lbl_player1score.setText(String.valueOf(player1score));

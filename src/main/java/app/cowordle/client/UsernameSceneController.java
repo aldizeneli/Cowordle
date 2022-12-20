@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class UsernameSceneController {
 
@@ -29,7 +30,7 @@ public class UsernameSceneController {
     public void login(ActionEvent event) throws IOException { //TODO: rename login to something else
 
         String inputUsername = this.tf_username.getText();
-        if(inputUsername == null || inputUsername.isEmpty())
+        if(inputUsername == null || inputUsername.isEmpty() || !Pattern.compile("[A-Za-z]+").matcher(inputUsername).matches())
             return;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));

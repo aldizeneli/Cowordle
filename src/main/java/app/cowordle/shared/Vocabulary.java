@@ -18,7 +18,7 @@ public class Vocabulary {
         try {
             loadVocabulary();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            //TODO
         }
     }
 

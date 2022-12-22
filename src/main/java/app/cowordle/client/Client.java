@@ -19,12 +19,13 @@ public class Client {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private String username;
-    private boolean isMyTurn;
-    private ClientController controller;
-    private boolean gameInProgress;
-    private boolean gameEnded;
+
     private String guid;
+    private String username;
+
+    private boolean isMyTurn;
+    private boolean gameEnded;
+    private ClientController controller;
 
     public Client(Socket socket, String username, ClientController controller) {
         try {
@@ -43,7 +44,7 @@ public class Client {
         }
     }
 
-    public void startHeartbeatSystem() {
+    private void startHeartbeatSystem() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +65,7 @@ public class Client {
     }
 
 
-    public void listenForMessage() {
+    private void listenForMessage() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -84,22 +85,19 @@ public class Client {
                             isMyTurn = message.message.equals(guid);
 
                             //TODO: remove
-                            if(isMyTurn)
+                            if (isMyTurn)
                                 System.out.println("è il mio turno!");
-                            //TODO: unlock ui to insert values
-                        } else if(message.action == ActionType.SERVERINFO) { //TODO: REMOVE?
 
-                        } else if(message.action == ActionType.CLIENTREGISTRATION) {
+                            controller.manageMyTurnIndicators(isMyTurn);
+                        }
+                         else if(message.action == ActionType.CLIENTREGISTRATION) {
                             guid = message.message;
-                        } else if(message.action == ActionType.GAMESTART) {
-                            gameInProgress = true;
                         } else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
                             controller.showPopUp("Word guessed!", false, null);
                         }  else if(message.action == ActionType.GAMEEND || message.action == ActionType.PLAYERLEFT) {
                             String popupText = message.action == ActionType.GAMEEND ? "GAME OVER!" : "Your opponent left the game!";
-                            isMyTurn = false;
                             gameEnded = true;
                             controller.showPopUp(popupText, true, message.message);
                         }
@@ -134,7 +132,7 @@ public class Client {
         }
     }
 
-    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+    private void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         try {
             if(bufferedReader != null) {
                 bufferedReader.close();

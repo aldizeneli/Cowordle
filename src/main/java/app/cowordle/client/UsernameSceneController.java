@@ -8,41 +8,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class UsernameSceneController {
-
     @FXML
     private TextField tf_username;
-    @FXML
-    private Button button_sendUsername;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-    public void login(ActionEvent event) throws IOException { //TODO: rename login to something else
+    public void goToGameScene(ActionEvent event) throws IOException {
 
         String inputUsername = this.tf_username.getText();
         if(inputUsername == null || inputUsername.isEmpty() || !Pattern.compile("[A-Za-z]+").matcher(inputUsername).matches())
             return;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));
-        root = loader.load();
+        Parent root = loader.load();
 
         ClientController gameSceneController = loader.getController();
 
         gameSceneController.initializeGameStage(inputUsername);
 
-        //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

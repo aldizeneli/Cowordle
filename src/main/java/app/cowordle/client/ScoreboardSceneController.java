@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class ScoreboardSceneController implements Initializable {
-
     @FXML
     private Label lbl_player1username;
     @FXML
@@ -39,21 +38,9 @@ public class ScoreboardSceneController implements Initializable {
     private Button btn_close;
     private String username;
 
-    //TODO: REMOVE
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//            @Override
-//            public void handle(WindowEvent t) {
-//                Platform.exit();
-//                System.exit(0);
-//            }
-//        });
-
         this.btn_close.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
                 Platform.exit();
@@ -62,25 +49,18 @@ public class ScoreboardSceneController implements Initializable {
         });
     }
 
-    public void goToGameScene(ActionEvent event) throws IOException {
+    public void goToGameScene(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));
-            root = loader.load();
+            Parent root = loader.load();
 
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
 
             ClientController gameSceneController = loader.getController();
-            gameSceneController.initializeGameStage(this.username); //TODO: FARSI ARRIVARE QUI L USERNAME CORRENTE E USARE QUELLO
+            gameSceneController.initializeGameStage(this.username);
 
-//            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//                @Override
-//                public void handle(WindowEvent t) {
-//                    Platform.exit();
-//                    System.exit(0);
-//                }
-//            });
             stage.show();
         } catch (IOException e) {
             //TODO: cant close socket etc.. because here not present, call Platform.exit(); System.exit(0);

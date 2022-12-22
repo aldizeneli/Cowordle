@@ -21,10 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -36,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class ClientController implements Initializable {
+    public static final int WORD_LENGTH = 5;
     @FXML
     private AnchorPane ap_main;
     @FXML
@@ -48,12 +46,12 @@ public class ClientController implements Initializable {
     private ScrollPane sp_main;
     @FXML
     private Label lbl_inputValidation;
-    private Client client;
+    @FXML
+    private ProgressIndicator prg_myTurn;
+    @FXML
+    private Label lbl_myTurn;
 
-    //TODO: REMOVE
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    private Client client;
 
 
     public ClientController() { //TODO: rename GameSceneController
@@ -71,6 +69,9 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        lbl_myTurn.setVisible(false);
+        prg_myTurn.setVisible(false);
         this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
@@ -82,15 +83,15 @@ public class ClientController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 lbl_inputValidation.setVisible(false);
                 String inputText = tf_message.getText();
-                if (inputText.length() == 5) {
+
+                if (inputText.length() == WORD_LENGTH) {
                     boolean isValidPattern = Pattern.compile("[A-Za-z]{5}").matcher(inputText).matches();
                     if(isValidPattern) {
                         client.sendMessageToServer(inputText, ActionType.WORDGUESS);
                         tf_message.clear();
-                    } else {
-                        tf_message.clear();
-                        showInputValidationLabel("Please insert only a-z characters");
                     }
+                    else
+                        showInputValidationLabel("Please insert only a-z characters");
                 } else {
                     showInputValidationLabel("Please insert a word with 5 letters");
                 }
@@ -98,7 +99,7 @@ public class ClientController implements Initializable {
         });
     }
 
-    public void showInputValidationLabel(String text) { //TODO: SEEMS IS NOT WORKING, DOESNT UPDATE UI
+    public void showInputValidationLabel(String text) {
         Platform.runLater(new Runnable() {
             public void run()
             {
@@ -109,17 +110,27 @@ public class ClientController implements Initializable {
         });
     }
 
+    public void manageMyTurnIndicators(boolean isMyTurn) {
+        Platform.runLater(new Runnable() {
+            public void run()
+            {
+                lbl_myTurn.setVisible(isMyTurn);
+                prg_myTurn.setVisible(isMyTurn);
+                button_send.setDisable(!isMyTurn);
+            }
+        });
+    }
+
     public void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score, String currentClientUsername)  {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("scoreboard-view.fxml"));
-            root = loader.load();
+            Parent root = loader.load();
 
             ScoreboardSceneController scoreboardController = loader.getController();
             scoreboardController.initializeScoreboardStage(player1username, player1score, player2username, player2score, currentClientUsername);
 
-            //root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
-            stage = (Stage) this.ap_main.getScene().getWindow();
-            scene = new Scene(root);
+            Stage stage = (Stage) this.ap_main.getScene().getWindow();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }  catch (IOException e) {
@@ -192,7 +203,6 @@ public class ClientController implements Initializable {
     }
 
     private void showDialogScene(String dialogText, boolean goToScoreStage, String scores) {
-        //TODO: try to initialize popup only once during startup and here just do myDialog.show();
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.setTitle("Info");

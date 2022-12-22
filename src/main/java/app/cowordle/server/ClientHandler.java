@@ -12,11 +12,14 @@ public class ClientHandler {
     public Socket socket;
     public BufferedReader bufferedReader;
     public BufferedWriter bufferedWriter;
+
+    public String guid;
     public String username;
+
     public Date lastHeartbeatDate;
     private int score;
     public boolean gameEnded;
-    public String guid;
+
 
     public ClientHandler(Socket socket) {
         try {

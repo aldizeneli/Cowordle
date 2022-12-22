@@ -12,7 +12,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Button fx:id="button_sendUsername" layoutX="419.0" layoutY="632.0" mnemonicParsing="false" onAction="#login" prefHeight="34.0" prefWidth="116.0" text="Play" textAlignment="CENTER" />
+      <Button fx:id="button_sendUsername" layoutX="419.0" layoutY="632.0" mnemonicParsing="false" onAction="#goToGameScene" prefHeight="34.0" prefWidth="116.0" text="Play" textAlignment="CENTER" />
       <TextField fx:id="tf_username" layoutX="38.0" layoutY="632.0" prefHeight="34.0" prefWidth="358.0" />
       <ImageView fitHeight="293.0" fitWidth="358.0" layoutX="44.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
          <image>

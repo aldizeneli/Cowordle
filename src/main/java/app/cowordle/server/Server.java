@@ -13,6 +13,11 @@ import com.google.gson.Gson;
 import app.cowordle.shared.Message;
 
 public class Server {
+    public static final int MAX_NUM_OF_PLAYERS = 2;
+    public static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
+    public static final int WORD_LENGTH = 5;
+    public static final int MAX_SCORE = 2; //TODO: PUT BACK 5
+
     private ServerSocket serverSocket;
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private String currentTurnClientGuid;
@@ -20,14 +25,9 @@ public class Server {
     private boolean gameInProgress;
     private boolean waitingPlayers;
     private int currentTurnUserIndex;
-    public static final int MAX_NUM_OF_PLAYERS = 2;
-    public static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
-    public static final int MAX_SCORE = 2; //TODO: PUT BACK 5
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
-
-        //start monitoring client connections only after game start
         monitorClientsConnection();
     }
 
@@ -57,10 +57,8 @@ public class Server {
 
     private void initializeNewGame() {
         System.out.println("All ready, starting game...");
-        broadcastMessage("SERVER: tutti gli utenti connessi. Iniziamo", ActionType.GAMESTART, null);
 
         this.gameInProgress = true;
-
         this.currentTurnUserIndex = MAX_NUM_OF_PLAYERS-1;
         setNextTurnPlayer();
 
@@ -178,11 +176,10 @@ public class Server {
     }
 
     private String getAnswerEvaluation(Message message) {
-        //TODO: if(answerArray.length != currentWord.lenght) => invalid
-
         StringBuilder answer = new StringBuilder();
         char[] currentWordArray = message.message.toLowerCase().toCharArray();
-        for (int i = 0; i < currentWordArray.length; i++) {
+
+        for (int i = 0; i < WORD_LENGTH; i++) {
             char currentChar = currentWordArray[i];
             if(currentChar == currentWord.charAt((i))) {
                 answer.append('g');

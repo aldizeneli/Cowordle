@@ -173,7 +173,7 @@ public class ClientController implements Initializable {
                rgbValue = "25, 179, 33";
                break;
            case 'y':
-               rgbValue = "235, 206, 16";
+               rgbValue = "255, 155, 16";
                break;
            case 'r':
                rgbValue = "224, 18, 66";

@@ -16,8 +16,8 @@ import javafx.stage.WindowEvent;
 
 public class ClientApplication extends javafx.application.Application {
 
-    static final double STAGE_HEIGHT=735.0;
-    static final double STAGE_WIDTH=575.0;
+    static final double STAGE_HEIGHT=739.0;
+    static final double STAGE_WIDTH=581.0;
     public ClientApplication() { }
 
     public void start(Stage stage) throws IOException {
@@ -39,9 +39,6 @@ public class ClientApplication extends javafx.application.Application {
                 System.exit(0);
             }
         });
-
-//        stage.initStyle(StageStyle.TRANSPARENT);
-//        scene.setFill(Color.TRANSPARENT);
 
         stage.show();
     }

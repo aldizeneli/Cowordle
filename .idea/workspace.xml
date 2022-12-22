@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-finita logica turno con guid al posto di username">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-passaggio punteggi a score scene">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/server/vocabulary.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/server/vocabulary.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/rules.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/assets/rules.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/scoreboard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/scoreboard-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/username-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/username-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671551836850</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="-passaggio punteggi a score scene">
+      <created>1671556051055</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1671556051055</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -272,7 +278,8 @@
     <MESSAGE value="-sistemato logo progetto&#10;-passato username client a stage punteggio per ricollegarsi con stesso username&#10;-gestita chiusura della popup di info senza che rompa il workflow" />
     <MESSAGE value="-logica turno con guid al posto di username" />
     <MESSAGE value="-finita logica turno con guid al posto di username" />
-    <option name="LAST_COMMIT_MESSAGE" value="-finita logica turno con guid al posto di username" />
+    <MESSAGE value="-passaggio punteggi a score scene" />
+    <option name="LAST_COMMIT_MESSAGE" value="-passaggio punteggi a score scene" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

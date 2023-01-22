@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-modifica layout">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-aggiunti al layout indicatori client turno corrente&#10;-pulizia codice">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/Vocabulary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/username-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/username-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

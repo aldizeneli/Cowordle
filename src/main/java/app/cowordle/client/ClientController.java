@@ -69,9 +69,7 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        lbl_myTurn.setVisible(false);
-        prg_myTurn.setVisible(false);
+        button_send.setDisable(true);
         this.vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
@@ -114,8 +112,18 @@ public class ClientController implements Initializable {
         Platform.runLater(new Runnable() {
             public void run()
             {
-                lbl_myTurn.setVisible(isMyTurn);
-                prg_myTurn.setVisible(isMyTurn);
+                prg_myTurn.setVisible(false);
+                if(isMyTurn) {
+                    lbl_myTurn.setText("It's your turn!");
+                    lbl_myTurn.setTextFill(Color.color(0.3, 0.7, 0.1));
+                    lbl_myTurn.setLayoutX(450.0);
+                }
+                else {
+                    lbl_myTurn.setText("It's your opponents turn!");
+                    lbl_myTurn.setTextFill(Color.color(0.9, 0.3, 0.3));
+                    lbl_myTurn.setLayoutX(390.0);
+                }
+
                 button_send.setDisable(!isMyTurn);
             }
         });

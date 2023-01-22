@@ -19,7 +19,7 @@
             <Image url="@../assets/app-logo.png" />
          </image></ImageView>
       <Label fx:id="lbl_inputValidation" layoutX="30.0" layoutY="619.0" prefHeight="17.0" prefWidth="518.0" />
-      <Label fx:id="lbl_myTurn" layoutX="425.0" layoutY="84.0" text="It's your turn!" textFill="#24a1ce">
+      <Label fx:id="lbl_myTurn" layoutX="384.0" layoutY="84.0" prefHeight="20.0" prefWidth="159.0" text="Waiting for players" textFill="#24a1ce">
          <font>
             <Font size="14.0" />
          </font>

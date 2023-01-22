@@ -57,6 +57,7 @@ public class Server {
 
     private void initializeNewGame() {
         System.out.println("All ready, starting game...");
+        broadcastMessage("", ActionType.GAMESTART, null);
 
         this.gameInProgress = true;
         this.currentTurnUserIndex = MAX_NUM_OF_PLAYERS-1;

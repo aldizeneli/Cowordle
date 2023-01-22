@@ -34,6 +34,7 @@ public class Client {
             this.bufferedReader = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             this.username = username;
             this.controller = controller;
+            this.gameEnded = false;
 
             //avvio i thread (sarebbero operazioni bloccanti altrimenti)
             listenForMessage();
@@ -71,6 +72,7 @@ public class Client {
             public void run() {
                 String msgFromServer;
                 Gson gson = new Gson();
+
                 while(socket.isConnected() && !gameEnded) {
                     try {
                         msgFromServer = bufferedReader.readLine();
@@ -92,7 +94,10 @@ public class Client {
                         }
                          else if(message.action == ActionType.CLIENTREGISTRATION) {
                             guid = message.message;
-                        } else if(message.action == ActionType.WORDGUESSRESULT) {
+                        } else if(message.action == ActionType.GAMESTART) {
+
+                        }
+                         else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
                             controller.showPopUp("Word guessed!", false, null);

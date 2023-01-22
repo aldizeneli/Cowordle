@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-aggiunti al layout indicatori client turno corrente&#10;-pulizia codice">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/shared/ActionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671728354876</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario">
+      <created>1674405033502</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1674405033502</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -286,7 +291,8 @@
     <MESSAGE value="-finita logica turno con guid al posto di username" />
     <MESSAGE value="-passaggio punteggi a score scene" />
     <MESSAGE value="-modifica layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="-modifica layout" />
+    <MESSAGE value="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

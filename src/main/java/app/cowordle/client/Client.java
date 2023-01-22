@@ -95,7 +95,7 @@ public class Client {
                          else if(message.action == ActionType.CLIENTREGISTRATION) {
                             guid = message.message;
                         } else if(message.action == ActionType.GAMESTART) {
-
+                            //could be useful
                         }
                          else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);

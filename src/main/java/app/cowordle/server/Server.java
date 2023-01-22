@@ -45,7 +45,7 @@ public class Server {
 
                 listenForMessage(clientHandler);
 
-                broadcastMessage("SERVER: Si è collegato " + clientHandler.username +". Num di utenti: " + clientHandlers.size(), ActionType.SERVERINFO, null);
+                broadcastMessage("SERVER: Si è collegato " + clientHandler.getUsername() +". Num di utenti: " + clientHandlers.size(), ActionType.SERVERINFO, null);
             }
             waitingPlayers = false;
             initializeNewGame();
@@ -79,16 +79,14 @@ public class Server {
                     public void run() {
                         ArrayList<ClientHandler> disconnectedClients = new ArrayList<>();
                         for (ClientHandler clientHandler:clientHandlers) {
-                            long secondsSinceLastHeartbeat = (new Date().getTime() - clientHandler.lastHeartbeatDate.getTime()) / 1000;
-
-                            if (secondsSinceLastHeartbeat > HEARTBEAT_TOLERANCE_SECONDS) {
-                                System.out.println("client disconnected: " + clientHandler.username);
+                            long secondsSinceLastHeartbeat = (new Date().getTime() - clientHandler.getElapsedTimeFromLastHeartbeat()) / 1000;
+                            if (secondsSinceLastHeartbeat >= HEARTBEAT_TOLERANCE_SECONDS) {
+                                System.out.println("client disconnected: " + clientHandler.getUsername());
                                 clientHandler.closeEverything();
                                 disconnectedClients.add(clientHandler);
                             }
                         }
                         if(disconnectedClients.size() > 0) {
-                            clientHandlers.removeAll(disconnectedClients);
                             if(gameInProgress)
                                 manageEndGame(ActionType.PLAYERLEFT);
                         }
@@ -102,39 +100,35 @@ public class Server {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String msgFromClient;
-                Gson gson = new Gson();
-                while(clientHandler.socket.isConnected() && !clientHandler.gameEnded) {
-                    try {
-                        msgFromClient = clientHandler.bufferedReader.readLine();
-                        Message message = gson.fromJson(msgFromClient, Message.class);
+                Message msgFromClient;
+                while(clientHandler.isSocketOpen()) {
+                    msgFromClient = clientHandler.listenForMessage();
 
-                        //heartbeat management
-                        if(message.action == ActionType.HEARTBEAT) {
-                            //System.out.println("Heartbeat from: " + message.username);
-                            clientHandler.lastHeartbeatDate = new Date();
-                            continue;
-                        }
+                    if(msgFromClient == null)
+                        continue;
 
-                        if(gameInProgress) {
-                            boolean isClientsTurn = message.guid.equals(currentTurnClientGuid);
-                            if (isClientsTurn) {
-                                String result = getAnswerEvaluation(message);
-                                broadcastMessage(message.message, ActionType.WORDGUESSRESULT, result);
+                    //heartbeat management
+                    if(msgFromClient.action == ActionType.HEARTBEAT) {
+                        //System.out.println("Heartbeat from: " + message.username);
+                        clientHandler.seLastHeartbeatDate(new Date());
+                        continue;
+                    }
 
-                                if (wordCorrectlyGuessed(result))
-                                    manageWordGuessed(result, clientHandler);
+                    if(gameInProgress) {
+                        boolean isClientsTurn = msgFromClient.guid.equals(currentTurnClientGuid);
+                        if (isClientsTurn) {
+                            String result = getAnswerEvaluation(msgFromClient);
+                            broadcastMessage(msgFromClient.message, ActionType.WORDGUESSRESULT, result);
 
+                            if (wordCorrectlyGuessed(result))
+                                manageWordGuessed(result, clientHandler);
+                            else
                                 setNextTurnPlayer();
-                            } else
-                                System.out.println("message refused from " + clientHandler.username);
-                        }
-
-                    } catch(IOException e) {
-//                        e.printStackTrace();
+                        } else
+                            System.out.println("message refused from " + clientHandler.getUsername());
                     }
                 }
-                System.out.println("ListenForMessage thread exit for " + clientHandler.username);
+                System.out.println("ListenForMessage thread exit for " + clientHandler.getUsername());
             }
 
             private boolean wordCorrectlyGuessed(String result) {
@@ -145,7 +139,7 @@ public class Server {
 
     private void setNextTurnPlayer() {
         currentTurnUserIndex = currentTurnUserIndex == MAX_NUM_OF_PLAYERS - 1 ? 0 : currentTurnUserIndex + 1;
-        currentTurnClientGuid = clientHandlers.get(currentTurnUserIndex).guid;
+        currentTurnClientGuid = clientHandlers.get(currentTurnUserIndex).getGuid();
         broadcastMessage(currentTurnClientGuid, ActionType.TURNCHANGE, null);
     }
 
@@ -160,8 +154,15 @@ public class Server {
 
     private void manageEndGame(ActionType actionType) {
         StringBuilder stringBuilder = new StringBuilder();
+
+        Comparator<ClientHandler> scoreComparator = (a,b) -> Integer.compare(b.getScore(), a.getScore());
+        clientHandlers.sort(scoreComparator);
+
         for(ClientHandler clientHandler : clientHandlers) {
-            stringBuilder.append(clientHandler.username + ";" + clientHandler.getScore() + ";");
+            stringBuilder.append(clientHandler.getUsername());
+            stringBuilder.append(";");
+            stringBuilder.append(clientHandler.getScore());
+            stringBuilder.append(";");
         }
 
         broadcastMessage(stringBuilder.toString(), actionType, null);
@@ -194,18 +195,8 @@ public class Server {
     }
 
     private void broadcastMessage(String messageToSend, ActionType action, String additionalInfo) {
-        Gson gson = new Gson();
         for(ClientHandler clientHandler : clientHandlers) {
-            try {
-                Message messageObject = new Message(messageToSend, "server", action, additionalInfo);
-                String message = gson.toJson(messageObject);
-
-                clientHandler.bufferedWriter.write(message);
-                clientHandler.bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
-                clientHandler.bufferedWriter.flush();
-            } catch(IOException e) {
-                //closeEverything(socket, bufferedReader, bufferedWriter);
-            }
+            clientHandler.sendMessage(messageToSend, action, additionalInfo);
         }
     }
 

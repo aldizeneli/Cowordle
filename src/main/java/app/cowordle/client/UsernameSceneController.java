@@ -27,7 +27,7 @@ public class UsernameSceneController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));
         Parent root = loader.load();
 
-        ClientController gameSceneController = loader.getController();
+        GameSceneController gameSceneController = loader.getController();
 
         gameSceneController.initializeGameStage(inputUsername);
 

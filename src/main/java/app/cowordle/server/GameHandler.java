@@ -1,18 +1,16 @@
 package app.cowordle.server;
 
 
+import app.cowordle.shared.ActionType;
+import app.cowordle.shared.Message;
+import app.cowordle.shared.Vocabulary;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-import app.cowordle.shared.ActionType;
-import app.cowordle.shared.Vocabulary;
-import com.google.gson.Gson;
-
-import app.cowordle.shared.Message;
-
-public class Server {
+public class GameHandler {
     private static final int MAX_NUM_OF_PLAYERS = 2;
     private static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
     private static final int WORD_LENGTH = 5;
@@ -26,7 +24,7 @@ public class Server {
     private boolean waitingPlayers;
     private int currentTurnUserIndex;
 
-    public Server(ServerSocket serverSocket) {
+    public GameHandler(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
         monitorClientsConnection();
     }

@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -32,8 +31,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class ClientController implements Initializable {
-    public static final int WORD_LENGTH = 5;
+public class GameSceneController implements Initializable {
+
+    //region Constants
+    private static final int WORD_LENGTH = 5;
+
+    //endregion
+
+    //region Properties
+    private  CommunicationHandler communicationHandler;
     @FXML
     private AnchorPane ap_main;
     @FXML
@@ -51,17 +57,21 @@ public class ClientController implements Initializable {
     @FXML
     private Label lbl_myTurn;
 
-    private Client client;
+    //endregion
 
+    //region Constructors
 
-    public ClientController() { //TODO: rename GameSceneController
-    }
+    public GameSceneController() {  }
 
+    //endregion
+
+    //region Public Methods
 
     public void initializeGameStage(String username) {
         try {
             Socket socket = new Socket("localhost", 1234);
-            this.client = new Client(socket, username, this);
+            this.communicationHandler = new CommunicationHandler(socket, username, this);
+
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,7 +95,7 @@ public class ClientController implements Initializable {
                 if (inputText.length() == WORD_LENGTH) {
                     boolean isValidPattern = Pattern.compile("[A-Za-z]{5}").matcher(inputText).matches();
                     if(isValidPattern) {
-                        client.sendMessageToServer(inputText, ActionType.WORDGUESS);
+                        communicationHandler.sendMessageToServer(inputText, ActionType.WORDGUESS);
                         tf_message.clear();
                     }
                     else
@@ -93,17 +103,6 @@ public class ClientController implements Initializable {
                 } else {
                     showInputValidationLabel("Please insert a word with 5 letters");
                 }
-            }
-        });
-    }
-
-    public void showInputValidationLabel(String text) {
-        Platform.runLater(new Runnable() {
-            public void run()
-            {
-                ClientController.this.lbl_inputValidation.setText(text);
-                ClientController.this.lbl_inputValidation.setVisible(true);
-                ClientController.this.tf_message.clear();
             }
         });
     }
@@ -129,23 +128,6 @@ public class ClientController implements Initializable {
         });
     }
 
-    public void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score, String currentClientUsername)  {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("scoreboard-view.fxml"));
-            Parent root = loader.load();
-
-            ScoreboardSceneController scoreboardController = loader.getController();
-            scoreboardController.initializeScoreboardStage(player1username, player1score, player2username, player2score, currentClientUsername);
-
-            Stage stage = (Stage) this.ap_main.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }  catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void addWordGuess(String inputWord, String resultFromServer) {
         Platform.runLater(new Runnable() {
             public void run()
@@ -163,12 +145,53 @@ public class ClientController implements Initializable {
 
                     hBox.getChildren().add(getLetterTileTextFlow(inputChar, resultChar));
                 }
-                ClientController.this.vbox_messages.getChildren().add(hBox);
+                GameSceneController.this.vbox_messages.getChildren().add(hBox);
             }
         });
     }
 
-    public TextFlow getLetterTileTextFlow(char answerChar, char resultChar) {
+    public void showPopUp(String dialogText, boolean goToScoreStage, String scores) {
+        Platform.runLater(new Runnable() {
+            public void run()
+            {
+                showDialogScene(dialogText, goToScoreStage, scores);
+            }
+        });
+    }
+
+    //endregion
+
+    //region Private Methods
+
+    private void showInputValidationLabel(String text) {
+        Platform.runLater(new Runnable() {
+            public void run()
+            {
+                GameSceneController.this.lbl_inputValidation.setText(text);
+                GameSceneController.this.lbl_inputValidation.setVisible(true);
+                GameSceneController.this.tf_message.clear();
+            }
+        });
+    }
+
+    private void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score, String currentClientUsername)  {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scoreboard-view.fxml"));
+            Parent root = loader.load();
+
+            ScoreboardSceneController scoreboardController = loader.getController();
+            scoreboardController.initializeScoreboardStage(player1username, player1score, player2username, player2score, currentClientUsername);
+
+            Stage stage = (Stage) this.ap_main.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private TextFlow getLetterTileTextFlow(char answerChar, char resultChar) {
         Text text = new Text(String.valueOf(answerChar).toUpperCase());
         TextFlow textFlow = new TextFlow(new Node[]{text});
         textFlow.setStyle("-fx-color: rgb(239, 242, 255); -fx-background-color: " + getRgbColorStringFromChar(resultChar) +"; -fx-background-radius: 12px;");
@@ -185,7 +208,7 @@ public class ClientController implements Initializable {
         return textFlow;
     }
 
-    public String getRgbColorStringFromChar(char answerChar) {
+    private String getRgbColorStringFromChar(char answerChar) {
         String rgbValue = "";
         switch (answerChar) {
            case 'g':
@@ -199,15 +222,6 @@ public class ClientController implements Initializable {
                break;
         }
         return "rgb(" + rgbValue + ")";
-    }
-
-    public void showPopUp(String dialogText, boolean goToScoreStage, String scores) {
-        Platform.runLater(new Runnable() {
-            public void run()
-            {
-                showDialogScene(dialogText, goToScoreStage, scores);
-            }
-        });
     }
 
     private void showDialogScene(String dialogText, boolean goToScoreStage, String scores) {
@@ -272,12 +286,14 @@ public class ClientController implements Initializable {
     }
 
     private void clearBoard() {
-        ClientController.this.vbox_messages.getChildren().clear();
-        button_send.setDisable(false);
+        this.vbox_messages.getChildren().clear();
+        this.manageMyTurnIndicators(this.communicationHandler.getClientIsMyTurn());
     }
 
     private void goToScoreStage(String scores) {
         String[] scoreArray = scores.split(";");
-        loadScoreboardScene(scoreArray[0], Integer.valueOf(scoreArray[1]), scoreArray[2], Integer.valueOf(scoreArray[3]), client.getUsername());
+        loadScoreboardScene(scoreArray[0], Integer.valueOf(scoreArray[1]), scoreArray[2], Integer.valueOf(scoreArray[3]), communicationHandler.getClientUsername());
     }
+
+    //endregion
 }

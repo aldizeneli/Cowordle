@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/CommunicationHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/GameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/GameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +51,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zenel_08nepwp/Desktop/Briscola/Briscola/src/main/resources/app/cowordle/assets&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zenel_08nepwp/Desktop/Briscola/Cowordle&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -62,8 +67,9 @@
       <recent name="C:\Users\zenel_08nepwp\Desktop\Briscola\Briscola\src\main\resources\app\briscola\server" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="app.cowordle.shared" />
+      <recent name="app.cowordle.server" />
       <recent name="app.cowordle.client" />
+      <recent name="app.cowordle.shared" />
       <recent name="app.briscola.shared" />
     </key>
   </component>
@@ -253,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674405033502</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat">
+      <created>1674420109495</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1674420109495</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -292,7 +305,8 @@
     <MESSAGE value="-passaggio punteggi a score scene" />
     <MESSAGE value="-modifica layout" />
     <MESSAGE value="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario" />
+    <MESSAGE value="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -4,7 +4,6 @@ package app.cowordle.client;
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
 import com.google.gson.Gson;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.Timer;
@@ -133,6 +132,7 @@ public class CommunicationHandler {
                          else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
+                            client.increaseScore();
                             controller.showPopUp("Word guessed!", false, null);
                         }  else if(message.action == ActionType.GAMEEND || message.action == ActionType.PLAYERLEFT) {
                             String popupText = message.action == ActionType.GAMEEND ? "GAME OVER!" : "Your opponent left the game!";

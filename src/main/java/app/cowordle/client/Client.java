@@ -1,18 +1,5 @@
 package app.cowordle.client;
 
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
-import java.util.*;
-
-import app.cowordle.shared.ActionType;
-import app.cowordle.shared.Message;
-import com.google.gson.Gson;
-
 public class Client {
 
     //region Properties
@@ -21,12 +8,15 @@ public class Client {
     private String username;
     private boolean isMyTurn;
 
+    private int score;
+
     //endregion
 
     //region Constructors
 
     public Client() {
         this.isMyTurn = false;
+        this.score = 0;
     }
 
     public Client(String username) {
@@ -50,13 +40,17 @@ public class Client {
         return this.isMyTurn;
     }
 
+    public int getScore() {
+        return this.score;
+    }
+
+    public void increaseScore() {
+        this.score++;
+    }
+
     //endregion
 
     //region Setters
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void setGuid(String guid) {
         this.guid = guid;

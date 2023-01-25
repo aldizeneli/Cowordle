@@ -5,37 +5,38 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
-
 import app.cowordle.shared.ActionType;
-import app.cowordle.shared.Vocabulary;
-import com.google.gson.Gson;
-
-import app.cowordle.shared.Message;
 
 public class Server {
+
+    //region Constants
+
     private static final int MAX_NUM_OF_PLAYERS = 2;
     private static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
-    private static final int WORD_LENGTH = 5;
-    private static final int MAX_SCORE = 2; //TODO: PUT BACK 5
+
+    //endregion
+
+    //region Properties
 
     private ServerSocket serverSocket;
     private static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
-    private String currentTurnClientGuid;
-    private String currentWord;
-    private boolean gameInProgress;
-    private boolean waitingPlayers;
-    private int currentTurnUserIndex;
+    private GameHandler gameHandler;
+
+    //endregion
+
+    //region Constructors
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
-        monitorClientsConnection();
     }
+
+    //endregion
+
+    //region Public Methods
 
     public void startServer() {
         try {
             System.out.println("Server avviato...");
-            waitingPlayers = true;
-            gameInProgress = false;
 
             while(!serverSocket.isClosed() && clientHandlers.size() < MAX_NUM_OF_PLAYERS) {
                 Socket socket = serverSocket.accept();
@@ -43,11 +44,10 @@ public class Server {
                 ClientHandler clientHandler = new ClientHandler(socket);
                 clientHandlers.add(clientHandler);
 
-                listenForMessage(clientHandler);
-
-                broadcastMessage("SERVER: Si è collegato " + clientHandler.getUsername() +". Num di utenti: " + clientHandlers.size(), ActionType.SERVERINFO, null);
+                broadcastMessage("SERVER: new client connected " + clientHandler.getUsername() +". Num of clients: " + clientHandlers.size(), ActionType.SERVERINFO, null);
             }
-            waitingPlayers = false;
+
+            monitorClientsConnection();
             initializeNewGame();
 
         } catch (IOException e) {
@@ -55,18 +55,51 @@ public class Server {
         }
     }
 
+    public void manageEndGame(ActionType actionType) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Comparator<ClientHandler> scoreComparator = (a,b) -> Integer.compare(b.getScore(), a.getScore());
+        clientHandlers.sort(scoreComparator);
+
+        for(ClientHandler clientHandler : clientHandlers) {
+            stringBuilder.append(clientHandler.getUsername());
+            stringBuilder.append(";");
+            stringBuilder.append(clientHandler.getScore());
+            stringBuilder.append(";");
+        }
+
+        broadcastMessage(stringBuilder.toString(), actionType, null);
+        disconnectClients();
+        startServer();
+    }
+
+    public void manageWordGuess(String clientAnswer, String answerEvaluation) {
+        broadcastMessage(clientAnswer, ActionType.WORDGUESSRESULT, answerEvaluation);
+    }
+
+    public void manageWordGuessed(String answerEvaluation) {
+        broadcastMessage(answerEvaluation, ActionType.WORDGUESSED, null);
+    }
+
+    public void notifyNextTurnPlayer(String clientGuid) {
+        broadcastMessage(clientGuid, ActionType.TURNCHANGE, null);
+    }
+
+    //endregion
+
+    //region Private Methods
+
+    private void broadcastMessage(String messageToSend, ActionType action, String additionalInfo) {
+        for(ClientHandler clientHandler : clientHandlers) {
+            clientHandler.sendMessage(messageToSend, action, additionalInfo);
+        }
+    }
+
     private void initializeNewGame() {
         System.out.println("All ready, starting game...");
         broadcastMessage("", ActionType.GAMESTART, null);
 
-        this.gameInProgress = true;
-        this.currentTurnUserIndex = MAX_NUM_OF_PLAYERS-1;
-        setNextTurnPlayer();
-
-        Vocabulary vocabulary = new Vocabulary();
-        currentWord = vocabulary.getWord();
-
-        System.out.println("word to guess: " + currentWord);
+        this.gameHandler = new GameHandler(this, MAX_NUM_OF_PLAYERS, clientHandlers);
     }
 
     private void monitorClientsConnection() {
@@ -87,7 +120,7 @@ public class Server {
                             }
                         }
                         if(disconnectedClients.size() > 0) {
-                            if(gameInProgress)
+                            //if(gameInProgress) is needed?
                                 manageEndGame(ActionType.PLAYERLEFT);
                         }
                     }
@@ -96,108 +129,11 @@ public class Server {
         }).start();
     }
 
-    private void listenForMessage(ClientHandler clientHandler) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msgFromClient;
-                while(clientHandler.isSocketOpen()) {
-                    msgFromClient = clientHandler.listenForMessage();
-
-                    if(msgFromClient == null)
-                        continue;
-
-                    //heartbeat management
-                    if(msgFromClient.action == ActionType.HEARTBEAT) {
-                        //System.out.println("Heartbeat from: " + message.username);
-                        clientHandler.seLastHeartbeatDate(new Date());
-                        continue;
-                    }
-
-                    if(gameInProgress) {
-                        boolean isClientsTurn = msgFromClient.guid.equals(currentTurnClientGuid);
-                        if (isClientsTurn) {
-                            String result = getAnswerEvaluation(msgFromClient);
-                            broadcastMessage(msgFromClient.message, ActionType.WORDGUESSRESULT, result);
-
-                            if (wordCorrectlyGuessed(result))
-                                manageWordGuessed(result, clientHandler);
-                            else
-                                setNextTurnPlayer();
-                        } else
-                            System.out.println("message refused from " + clientHandler.getUsername());
-                    }
-                }
-                System.out.println("ListenForMessage thread exit for " + clientHandler.getUsername());
-            }
-
-            private boolean wordCorrectlyGuessed(String result) {
-                return result.equals(("ggggg"));
-            }
-        }).start();
-    }
-
-    private void setNextTurnPlayer() {
-        currentTurnUserIndex = currentTurnUserIndex == MAX_NUM_OF_PLAYERS - 1 ? 0 : currentTurnUserIndex + 1;
-        currentTurnClientGuid = clientHandlers.get(currentTurnUserIndex).getGuid();
-        broadcastMessage(currentTurnClientGuid, ActionType.TURNCHANGE, null);
-    }
-
-    private void manageWordGuessed(String result, ClientHandler clientHandler) {
-        clientHandler.incrementScore();
-        if(clientHandler.getScore() == MAX_SCORE) {
-            manageEndGame(ActionType.GAMEEND);
-        } else {
-            broadcastMessage(result, ActionType.WORDGUESSED, null);
-        }
-    }
-
-    private void manageEndGame(ActionType actionType) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        Comparator<ClientHandler> scoreComparator = (a,b) -> Integer.compare(b.getScore(), a.getScore());
-        clientHandlers.sort(scoreComparator);
-
-        for(ClientHandler clientHandler : clientHandlers) {
-            stringBuilder.append(clientHandler.getUsername());
-            stringBuilder.append(";");
-            stringBuilder.append(clientHandler.getScore());
-            stringBuilder.append(";");
-        }
-
-        broadcastMessage(stringBuilder.toString(), actionType, null);
-        endCurrentGame();
-        startServer();
-    }
-
-    private static void endCurrentGame() {
+    private static void disconnectClients() {
         for (ClientHandler client: clientHandlers) {
             client.closeEverything();
         }
         clientHandlers.clear();
-    }
-
-    private String getAnswerEvaluation(Message message) {
-        StringBuilder answer = new StringBuilder();
-        char[] currentWordArray = message.message.toLowerCase().toCharArray();
-
-        for (int i = 0; i < WORD_LENGTH; i++) {
-            char currentChar = currentWordArray[i];
-            if(currentChar == currentWord.charAt((i))) {
-                answer.append('g');
-            } else if(currentWord.contains(Character.toString(currentChar))) {
-                answer.append('y');
-            } else {
-                answer.append('r');
-            }
-        }
-        return answer.toString();
-    }
-
-    private void broadcastMessage(String messageToSend, ActionType action, String additionalInfo) {
-        for(ClientHandler clientHandler : clientHandlers) {
-            clientHandler.sendMessage(messageToSend, action, additionalInfo);
-        }
     }
 
     private void closeServerSocket() {
@@ -209,4 +145,6 @@ public class Server {
             e.printStackTrace();
         }
     }
+
+    //endregion
 }

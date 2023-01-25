@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/CommunicationHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/GameHandler.java" afterDir="false" />
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="-estratta parte di comunicazione del Client nel CommunicationHandler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/GameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/ScoreboardSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/UsernameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/CommunicationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/CommunicationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/GameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app/cowordle/client/board-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674420109495</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="-estratta parte di comunicazione del Client nel CommunicationHandler">
+      <created>1674599716878</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1674599716878</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -281,7 +284,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial project startup" />
     <MESSAGE value="-importato codice da poc javafx, al momento è perfettamente funzionante" />
     <MESSAGE value="-rinominato file, tutto funzionante, con struttura file folder definitiva" />
     <MESSAGE value="-importato codice di server e client, ma interfaccia client NON parte (parte se commenti clientController.Initialize())" />
@@ -306,7 +308,8 @@
     <MESSAGE value="-modifica layout" />
     <MESSAGE value="-Bottone send disabilitato finchè partita non inizia&#10;-label che indica: attesa giocatori, è il tuo turno, è il turno avversario" />
     <MESSAGE value="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Savepoint prima di refactoring&#10;-centralizzati metodi per invio e attesa di messaggi direttamente su ClientHandler&#10;-fix bug dopo abbandono utente non si riusciva ad aprire lo stage punteggi&#10;-fix bug invio messaggio dopo che un client era disconnesso ma prima che venisse rilevato dal heartbeat" />
+    <MESSAGE value="-estratta parte di comunicazione del Client nel CommunicationHandler" />
+    <option name="LAST_COMMIT_MESSAGE" value="-estratta parte di comunicazione del Client nel CommunicationHandler" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

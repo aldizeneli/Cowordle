@@ -1,4 +1,4 @@
-package app.cowordle.shared;
+package app.cowordle.server.utility;
 
 public class Word {
     public String value;

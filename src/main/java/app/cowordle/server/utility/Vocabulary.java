@@ -1,4 +1,4 @@
-package app.cowordle.shared;
+package app.cowordle.server.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vocabulary {
-    public static final String JSON_PATH = "src/main/resources/app/cowordle/server/vocabulary.json";
+    public static final String JSON_PATH = "src/main/java/app/cowordle/server/resources/vocabulary.json";
     public ArrayList<Word> vocabulary = new ArrayList<Word>();
 
     public Vocabulary() {

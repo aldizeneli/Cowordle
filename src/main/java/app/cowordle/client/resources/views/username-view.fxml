@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="ap_username" prefHeight="700.0" prefWidth="565.0" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #acf1ff 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.UsernameSceneController">
+<AnchorPane fx:id="ap_username" prefHeight="700.0" prefWidth="565.0" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #acf1ff 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.controllers.UsernameSceneController">
    <children>
       <Label layoutX="69.0" layoutY="40.0" prefHeight="53.0" prefWidth="425.0" text="Welcome to COWORDLE!">
          <font>

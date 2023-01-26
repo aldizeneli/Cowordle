@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="ap_score" prefHeight="700.0" prefWidth="565.0" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #acf1ff 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.ScoreboardSceneController">
+<AnchorPane fx:id="ap_score" prefHeight="700.0" prefWidth="565.0" style="-fx-background-color: linear-gradient(to bottom, #FFDEE9 0%, #acf1ff 100%);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.cowordle.client.controllers.ScoreboardSceneController">
    <children>
       <Label layoutX="190.0" layoutY="57.0" prefHeight="53.0" prefWidth="221.0" text="Game Over!">
          <font>

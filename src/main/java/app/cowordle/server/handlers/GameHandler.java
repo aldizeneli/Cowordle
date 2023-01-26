@@ -1,9 +1,11 @@
-package app.cowordle.server;
+package app.cowordle.server.handlers;
 
 
+import app.cowordle.server.Server;
+import app.cowordle.server.utility.Vocabulary;
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
-import app.cowordle.shared.Vocabulary;
+
 import java.util.*;
 
 public class GameHandler {
@@ -39,6 +41,14 @@ public class GameHandler {
         }
 
         initializeNewGame();
+    }
+
+    //endregion
+
+    //region Public Methods
+
+    public boolean gameInProgress() {
+        return this.gameInProgress;
     }
 
     //endregion
@@ -79,12 +89,13 @@ public class GameHandler {
         return answer.toString();
     }
 
-    private void manageWordGuessed(String result, ClientHandler clientHandler) {
+    private void manageWordGuessed(ClientHandler clientHandler) {
         clientHandler.incrementScore();
         if(clientHandler.getScore() == MAX_SCORE) {
+            this.gameInProgress = false;
             server.manageEndGame(ActionType.GAMEEND);
         } else {
-            server.manageWordGuessed(result);
+            server.manageWordGuessed(clientHandler.getGuid());
         }
     }
 
@@ -93,7 +104,9 @@ public class GameHandler {
             @Override
             public void run() {
                 Message msgFromClient;
-                while(clientHandler.isSocketOpen()) {
+                boolean keepListening = true;
+
+                while(keepListening) {
                     msgFromClient = clientHandler.listenForMessage();
 
                     if(msgFromClient == null)
@@ -102,7 +115,7 @@ public class GameHandler {
                     //heartbeat management
                     if(msgFromClient.action == ActionType.HEARTBEAT) {
                         //System.out.println("Heartbeat from: " + message.username);
-                        clientHandler.seLastHeartbeatDate(new Date());
+                        clientHandler.updateLastHeartbeatDate();
                         continue;
                     }
 
@@ -113,12 +126,14 @@ public class GameHandler {
                             server.manageWordGuess(msgFromClient.message, answerEvaluation);
 
                             if (wordCorrectlyGuessed(answerEvaluation))
-                                manageWordGuessed(answerEvaluation, clientHandler);
+                                manageWordGuessed(clientHandler);
                             else
                                 setNextTurnPlayer();
                         } else
                             System.out.println("message refused from " + clientHandler.getUsername());
                     }
+
+                    keepListening = clientHandler.isSocketOpen() && gameInProgress;
                 }
                 System.out.println("ListenForMessage thread exit for " + clientHandler.getUsername());
             }

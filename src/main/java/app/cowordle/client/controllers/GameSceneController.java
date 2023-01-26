@@ -1,4 +1,4 @@
-package app.cowordle.client;
+package app.cowordle.client.controllers;
 
 
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import app.cowordle.client.handlers.CommunicationHandler;
 import app.cowordle.shared.ActionType;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -39,7 +40,7 @@ public class GameSceneController implements Initializable {
     //endregion
 
     //region Properties
-    private  CommunicationHandler communicationHandler;
+    private CommunicationHandler communicationHandler;
     @FXML
     private AnchorPane ap_main;
     @FXML
@@ -56,6 +57,10 @@ public class GameSceneController implements Initializable {
     private ProgressIndicator prg_myTurn;
     @FXML
     private Label lbl_myTurn;
+    @FXML
+    private Label lbl_username;
+    @FXML
+    private Label lbl_score;
 
     //endregion
 
@@ -71,7 +76,7 @@ public class GameSceneController implements Initializable {
         try {
             Socket socket = new Socket("localhost", 1234);
             this.communicationHandler = new CommunicationHandler(socket, username, this);
-
+            this.lbl_username.setText(username);
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,7 +106,7 @@ public class GameSceneController implements Initializable {
                     else
                         showInputValidationLabel("Please insert only a-z characters");
                 } else {
-                    showInputValidationLabel("Please insert a word with 5 letters");
+                    showInputValidationLabel("Please insert a word with " + WORD_LENGTH + " letters");
                 }
             }
         });
@@ -122,8 +127,17 @@ public class GameSceneController implements Initializable {
                     lbl_myTurn.setTextFill(Color.color(0.9, 0.3, 0.3));
                     lbl_myTurn.setLayoutX(390.0);
                 }
-
+                
                 button_send.setDisable(!isMyTurn);
+            }
+        });
+    }
+
+    public void updateScore(int score) {
+        Platform.runLater(new Runnable() {
+            public void run()
+            {
+                lbl_score.setText("Score: " + score);
             }
         });
     }
@@ -176,7 +190,7 @@ public class GameSceneController implements Initializable {
 
     private void loadScoreboardScene(String player1username, int player1score, String player2username, int player2score, String currentClientUsername)  {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("scoreboard-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/scoreboard-view.fxml"));
             Parent root = loader.load();
 
             ScoreboardSceneController scoreboardController = loader.getController();

@@ -1,4 +1,4 @@
-package app.cowordle.client;
+package app.cowordle.client.controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,8 +15,15 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class UsernameSceneController {
+
+    //region Properties
+
     @FXML
     private TextField tf_username;
+
+    //endregion
+
+    //region Public Methods
 
     public void goToGameScene(ActionEvent event) throws IOException {
 
@@ -24,7 +31,7 @@ public class UsernameSceneController {
         if(inputUsername == null || inputUsername.isEmpty() || !Pattern.compile("[A-Za-z]+").matcher(inputUsername).matches())
             return;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/board-view.fxml"));
         Parent root = loader.load();
 
         GameSceneController gameSceneController = loader.getController();
@@ -43,5 +50,7 @@ public class UsernameSceneController {
         });
         stage.show();
     }
+
+    //endregion
 }
 

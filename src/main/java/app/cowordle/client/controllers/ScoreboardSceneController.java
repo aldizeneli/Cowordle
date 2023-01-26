@@ -1,4 +1,4 @@
-package app.cowordle.client;
+package app.cowordle.client.controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,6 +18,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ScoreboardSceneController implements Initializable {
+
+    //region Properties
+
     @FXML
     private Label lbl_player1username;
     @FXML
@@ -32,6 +35,9 @@ public class ScoreboardSceneController implements Initializable {
     private Button btn_close;
     private String username;
 
+    //endregion
+
+    //region Public Methods
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,7 +51,7 @@ public class ScoreboardSceneController implements Initializable {
 
     public void goToGameScene(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("board-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/board-view.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -70,5 +76,7 @@ public class ScoreboardSceneController implements Initializable {
         lbl_player2username.setText(player2username);
         lbl_player2score.setText(String.valueOf(player2score));
     }
+
+    //endregion
 }
 

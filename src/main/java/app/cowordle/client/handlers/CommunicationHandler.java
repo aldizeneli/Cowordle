@@ -1,6 +1,8 @@
-package app.cowordle.client;
+package app.cowordle.client.handlers;
 
 
+import app.cowordle.client.Client;
+import app.cowordle.client.controllers.GameSceneController;
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
 import com.google.gson.Gson;
@@ -82,18 +84,14 @@ public class CommunicationHandler {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Timer timer = new Timer();
-                timer.schedule( new TimerTask() {
-                    @Override
-                    public void run() {
-                        if(!gameEnded)
-                            sendMessageToServer(client.getUsername(), ActionType.HEARTBEAT);
-                        else {
-                            timer.cancel();
-                            timer.purge();
-                        }
+                try {
+                    while (!gameEnded) {
+                        sendMessageToServer(client.getUsername(), ActionType.HEARTBEAT);
+                        Thread.sleep(2000);
                     }
-                }, 0, 3000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }).start();
     }
@@ -132,7 +130,10 @@ public class CommunicationHandler {
                          else if(message.action == ActionType.WORDGUESSRESULT) {
                             controller.addWordGuess(message.message, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-                            client.increaseScore();
+                             if(message.message.equals(client.getGuid())) {
+                                 client.increaseScore();
+                                 controller.updateScore(client.getScore());
+                             }
                             controller.showPopUp("Word guessed!", false, null);
                         }  else if(message.action == ActionType.GAMEEND || message.action == ActionType.PLAYERLEFT) {
                             String popupText = message.action == ActionType.GAMEEND ? "GAME OVER!" : "Your opponent left the game!";

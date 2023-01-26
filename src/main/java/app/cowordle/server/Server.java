@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+
+import app.cowordle.server.handlers.ClientHandler;
+import app.cowordle.server.handlers.GameHandler;
 import app.cowordle.shared.ActionType;
 
 public class Server {
@@ -12,7 +15,7 @@ public class Server {
     //region Constants
 
     private static final int MAX_NUM_OF_PLAYERS = 2;
-    private static final int HEARTBEAT_TOLERANCE_SECONDS = 10;
+    private static final int HEARTBEAT_TOLERANCE_SECONDS = 7;
 
     //endregion
 
@@ -47,7 +50,6 @@ public class Server {
                 broadcastMessage("SERVER: new client connected " + clientHandler.getUsername() +". Num of clients: " + clientHandlers.size(), ActionType.SERVERINFO, null);
             }
 
-            monitorClientsConnection();
             initializeNewGame();
 
         } catch (IOException e) {
@@ -77,8 +79,8 @@ public class Server {
         broadcastMessage(clientAnswer, ActionType.WORDGUESSRESULT, answerEvaluation);
     }
 
-    public void manageWordGuessed(String answerEvaluation) {
-        broadcastMessage(answerEvaluation, ActionType.WORDGUESSED, null);
+    public void manageWordGuessed(String clientGuid) {
+        broadcastMessage(clientGuid, ActionType.WORDGUESSED, null);
     }
 
     public void notifyNextTurnPlayer(String clientGuid) {
@@ -100,18 +102,23 @@ public class Server {
         broadcastMessage("", ActionType.GAMESTART, null);
 
         this.gameHandler = new GameHandler(this, MAX_NUM_OF_PLAYERS, clientHandlers);
+        initializeHeartbeatSystem();
+    }
+
+    private void initializeHeartbeatSystem() {
+        for(ClientHandler clientHandler : clientHandlers) {
+            clientHandler.updateLastHeartbeatDate();
+        }
+        monitorClientsConnection();
     }
 
     private void monitorClientsConnection() {
         new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Timer timer = new Timer();
-                timer.schedule( new TimerTask() {
-                    @Override
-                    public void run() {
+            @Override public void run() {
+                try {
+                    while (gameHandler.gameInProgress()) {
                         ArrayList<ClientHandler> disconnectedClients = new ArrayList<>();
-                        for (ClientHandler clientHandler:clientHandlers) {
+                        for (ClientHandler clientHandler : clientHandlers) {
                             long secondsSinceLastHeartbeat = (new Date().getTime() - clientHandler.getElapsedTimeFromLastHeartbeat()) / 1000;
                             if (secondsSinceLastHeartbeat >= HEARTBEAT_TOLERANCE_SECONDS) {
                                 System.out.println("client disconnected: " + clientHandler.getUsername());
@@ -119,12 +126,15 @@ public class Server {
                                 disconnectedClients.add(clientHandler);
                             }
                         }
-                        if(disconnectedClients.size() > 0) {
-                            //if(gameInProgress) is needed?
-                                manageEndGame(ActionType.PLAYERLEFT);
+
+                        if (disconnectedClients.size() > 0) {
+                            manageEndGame(ActionType.PLAYERLEFT);
                         }
+                        Thread.sleep(2000);
                     }
-                }, 0, 2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }

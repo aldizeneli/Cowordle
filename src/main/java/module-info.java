@@ -11,4 +11,12 @@ module app.briscola {
     exports app.cowordle.shared;
     opens app.cowordle.server to javafx.fxml;
     opens app.cowordle.client to javafx.fxml;
+    exports app.cowordle.client.controllers;
+    opens app.cowordle.client.controllers to javafx.fxml;
+    exports app.cowordle.server.handlers;
+    opens app.cowordle.server.handlers to javafx.fxml;
+    exports app.cowordle.server.utility;
+    opens app.cowordle.server.utility to javafx.fxml;
+    exports app.cowordle.client.handlers;
+    opens app.cowordle.client.handlers to javafx.fxml;
 }

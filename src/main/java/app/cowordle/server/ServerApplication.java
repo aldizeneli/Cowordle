@@ -1,6 +1,5 @@
 package app.cowordle.server;
 
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -35,6 +35,9 @@ public class ClientHandler {
 
             handshake();
         } catch(IOException e) {
+            e.printStackTrace();
+            //if we get an exception in this initial stage of the connection, we
+            //free all resources
             closeEverything();
         }
     }
@@ -47,12 +50,12 @@ public class ClientHandler {
         this.score++;
     }
 
-    public int getScore() {
-        return this.score;
-    }
-
     public boolean isSocketOpen() {
         return this.socket.isConnected() && !this.connectionClosed;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     public long getElapsedTimeFromLastHeartbeat() {
@@ -76,9 +79,10 @@ public class ClientHandler {
         String msgFromServer = null;
         try {
             //i/o is blocking operation
-            msgFromServer = bufferedReader.readLine();
-
+            if(this.isSocketOpen())
+                msgFromServer = bufferedReader.readLine();
         } catch(IOException e) {
+            //e.printStackTrace();
             closeEverything();
         }
         Message message = gson.fromJson(msgFromServer, Message.class);
@@ -95,6 +99,7 @@ public class ClientHandler {
             bufferedWriter.newLine(); //serve xk il reader legge fino al new line e senza nn leggerebbe il mess mandato sopra
             bufferedWriter.flush();
         } catch(IOException e) {
+            //e.printStackTrace();
             closeEverything();
         }
     }
@@ -137,8 +142,7 @@ public class ClientHandler {
     private void getUsernameFromClient()  {
         //fist message from a client is its username
         Message messageFromServer = listenForMessage();
-        this.username = messageFromServer.message;
-        System.out.println(this.username);
+        this.username = messageFromServer.body;
     }
 
     //endregion

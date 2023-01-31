@@ -39,14 +39,18 @@ public class Server {
 
     public void startServer() {
         try {
-            System.out.println("Server avviato...");
+            System.out.println("Server running...");
 
             while(!serverSocket.isClosed() && clientHandlers.size() < MAX_NUM_OF_PLAYERS) {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected");
                 ClientHandler clientHandler = new ClientHandler(socket);
-                clientHandlers.add(clientHandler);
 
+                boolean isInvalidClientHandler = !clientHandler.isSocketOpen();
+                if(isInvalidClientHandler)
+                    continue;
+
+                clientHandlers.add(clientHandler);
                 broadcastMessage("SERVER: new client connected " + clientHandler.getUsername() +". Num of clients: " + clientHandlers.size(), ActionType.SERVERINFO, null);
             }
 

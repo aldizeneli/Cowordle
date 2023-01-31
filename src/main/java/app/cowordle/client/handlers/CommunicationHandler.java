@@ -8,8 +8,6 @@ import app.cowordle.shared.Message;
 import com.google.gson.Gson;
 import java.io.*;
 import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class CommunicationHandler {
 
@@ -40,7 +38,8 @@ public class CommunicationHandler {
             sendMessageToServer(client.getUsername(), ActionType.CLIENTREGISTRATION);
             startHeartbeatSystem();
         } catch(IOException e) {
-            closeEverything(socket, bufferedReader, bufferedWriter);
+            e.printStackTrace();
+            //closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
 
@@ -64,7 +63,8 @@ public class CommunicationHandler {
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch(IOException e) {
-            closeEverything(socket, bufferedReader, bufferedWriter);
+            e.printStackTrace();
+            //closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
 
@@ -90,7 +90,7 @@ public class CommunicationHandler {
                         Thread.sleep(2000);
                     }
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }).start();
@@ -100,10 +100,11 @@ public class CommunicationHandler {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                boolean keepListening = true;
                 String msgFromServer;
                 Gson gson = new Gson();
 
-                while(socket.isConnected() && !gameEnded) {
+                while(keepListening) {
                     try {
                         msgFromServer = bufferedReader.readLine();
                         Message message = gson.fromJson(msgFromServer, Message.class);
@@ -111,38 +112,38 @@ public class CommunicationHandler {
                         if(message == null)
                             continue;
 
-                        //System.out.println(message.message + "  " + message.action);
-
                         if(message.action == ActionType.TURNCHANGE) {
-                            client.setIsMyTurn(message.message.equals(client.getGuid()));
+                            client.setIsMyTurn(message.body.equals(client.getGuid()));
 
-                            //TODO: remove
                             if (client.getIsMyTurn())
-                                System.out.println("è il mio turno!");
+                                System.out.println("It's my turn");
 
                             controller.manageMyTurnIndicators(client.getIsMyTurn());
-                        }
-                         else if(message.action == ActionType.CLIENTREGISTRATION) {
-                            client.setGuid(message.message);
+                        } else if(message.action == ActionType.CLIENTREGISTRATION) {
+                            client.setGuid(message.body);
                         } else if(message.action == ActionType.GAMESTART) {
-                            //could be useful
-                        }
-                         else if(message.action == ActionType.WORDGUESSRESULT) {
-                            controller.addWordGuess(message.message, message.additionalInfo);
+                            System.out.println("Game started");
+                        } else if(message.action == ActionType.SERVERINFO) {
+                            System.out.println(message.body);
+                        } else if(message.action == ActionType.WORDGUESSRESULT) {
+                            controller.addWordGuess(message.body, message.additionalInfo);
                         } else if(message.action == ActionType.WORDGUESSED) {
-                             if(message.message.equals(client.getGuid())) {
+                             if(message.body.equals(client.getGuid())) {
                                  client.increaseScore();
                                  controller.updateScore(client.getScore());
                              }
                             controller.showPopUp("Word guessed!", false, null);
                         }  else if(message.action == ActionType.GAMEEND || message.action == ActionType.PLAYERLEFT) {
-                            String popupText = message.action == ActionType.GAMEEND ? "GAME OVER!" : "Your opponent left the game!";
                             gameEnded = true;
-                            controller.showPopUp(popupText, true, message.message);
+                            String popupText = message.action == ActionType.GAMEEND ? "GAME OVER!" : "Your opponent left the game!";
+                            controller.showPopUp(popupText, true, message.body);
                         }
 
+                        keepListening = socket.isConnected() && !gameEnded;
+
                     } catch(IOException e) {
-                        closeEverything(socket, bufferedReader, bufferedWriter);
+                        e.printStackTrace();
+                        //closeEverything(socket, bufferedReader, bufferedWriter);
                     }
                 }
                 System.out.println("client exit listenMessage thread: " + client.getUsername());

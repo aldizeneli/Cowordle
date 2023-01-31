@@ -74,7 +74,7 @@ public class GameSceneController implements Initializable {
 
     public void initializeGameStage(String username) {
         try {
-            Socket socket = new Socket("localhost", 1234);
+            Socket socket = new Socket("localhost", 49152);
             this.communicationHandler = new CommunicationHandler(socket, username, this);
             this.lbl_username.setText(username);
         }  catch (IOException e) {

@@ -1,15 +1,24 @@
 package app.cowordle.shared;
 
 public class Message {
+
+    //region Properties
+
     public String guid;
-    public String message;
+    public String body;
     public String additionalInfo;
     public ActionType action;
 
-    public Message(String message, String guid, ActionType action, String additionalInfo) {
+    //endregion
+
+    //region Constructors
+
+    public Message(String body, String guid, ActionType action, String additionalInfo) {
         this.guid = guid;
-        this.message = message;
+        this.body = body;
         this.action = action;
         this.additionalInfo = additionalInfo;
     }
+
+    //endregion
 }

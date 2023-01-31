@@ -13,7 +13,7 @@ public class GameHandler {
     //region Constants
 
     private static final int WORD_LENGTH = 5;
-    private static final int MAX_SCORE = 2; //TODO: PUT BACK 5
+    private static final int MAX_SCORE = 1; //TODO: PUT BACK 5
 
     //endregion
 
@@ -74,7 +74,7 @@ public class GameHandler {
 
     private String getAnswerEvaluation(Message message) {
         StringBuilder answer = new StringBuilder();
-        char[] currentWordArray = message.message.toLowerCase().toCharArray();
+        char[] currentWordArray = message.body.toLowerCase().toCharArray();
 
         for (int i = 0; i < WORD_LENGTH; i++) {
             char currentChar = currentWordArray[i];
@@ -123,7 +123,7 @@ public class GameHandler {
                         boolean isClientsTurn = msgFromClient.guid.equals(currentTurnClientGuid);
                         if (isClientsTurn) {
                             String answerEvaluation = getAnswerEvaluation(msgFromClient);
-                            server.manageWordGuess(msgFromClient.message, answerEvaluation);
+                            server.manageWordGuess(msgFromClient.body, answerEvaluation);
 
                             if (wordCorrectlyGuessed(answerEvaluation))
                                 manageWordGuessed(clientHandler);
@@ -137,7 +137,6 @@ public class GameHandler {
                 }
                 System.out.println("ListenForMessage thread exit for " + clientHandler.getUsername());
             }
-
             private boolean wordCorrectlyGuessed(String result) {
                 return result.equals(("ggggg"));
             }

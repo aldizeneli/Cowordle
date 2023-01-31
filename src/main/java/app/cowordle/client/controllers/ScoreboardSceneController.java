@@ -63,7 +63,7 @@ public class ScoreboardSceneController implements Initializable {
 
             stage.show();
         } catch (IOException e) {
-            //TODO: cant close socket etc.. because here not present, call Platform.exit(); System.exit(0);
+            e.printStackTrace();
         }
     }
 

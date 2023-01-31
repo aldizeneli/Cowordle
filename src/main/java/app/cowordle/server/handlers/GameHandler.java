@@ -13,7 +13,7 @@ public class GameHandler {
     //region Constants
 
     private static final int WORD_LENGTH = 5;
-    private static final int MAX_SCORE = 1; //TODO: PUT BACK 5
+    private static final int MAX_SCORE = 5;
 
     //endregion
 

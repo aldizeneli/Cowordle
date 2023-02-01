@@ -26,6 +26,7 @@ public class GameHandler {
     private int maxNumOfPlayers;
     private static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Server server;
+    private Vocabulary vocabulary;
 
     //endregion
 
@@ -60,7 +61,7 @@ public class GameHandler {
         this.currentTurnUserIndex = this.maxNumOfPlayers - 1;
         setNextTurnPlayer();
 
-        Vocabulary vocabulary = new Vocabulary();
+        this.vocabulary = new Vocabulary();
         currentWord = vocabulary.getWord();
 
         System.out.println("word to guess: " + currentWord);
@@ -96,6 +97,8 @@ public class GameHandler {
             server.manageEndGame(ActionType.GAMEEND);
         } else {
             server.manageWordGuessed(clientHandler.getGuid());
+            currentWord = vocabulary.getWord();
+            System.out.println("word to guess: " + currentWord);
         }
     }
 

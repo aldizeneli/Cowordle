@@ -4,6 +4,7 @@ package app.cowordle.client.controllers;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -78,7 +79,8 @@ public class GameSceneController implements Initializable {
             this.communicationHandler = new CommunicationHandler(socket, username, this);
             this.lbl_username.setText(username);
         }  catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("server is down");
+            showAlert("The server is not reachable, please try again later..");
         }
     }
 
@@ -238,6 +240,15 @@ public class GameSceneController implements Initializable {
         return "rgb(" + rgbValue + ")";
     }
 
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.show();
+    }
+
     private void showDialogScene(String dialogText, boolean goToScoreStage, String scores) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -251,7 +262,7 @@ public class GameSceneController implements Initializable {
 
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
+        vbox.setPadding(new Insets(15.0, 60.0, 15.0, 60.0));
         vbox.setSpacing(25);
         vbox.getChildren().add(new Text(dialogText));
         vbox.getChildren().add(okButton);
@@ -267,16 +278,14 @@ public class GameSceneController implements Initializable {
             okButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent arg0) {
-                    dialogStage.close();
-                    goToScoreStage(scores);
+                    goToScoreStage(dialogStage, scores);
                 }
             });
 
             dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
-                    dialogStage.close();
-                    goToScoreStage(scores);
+                    goToScoreStage(dialogStage, scores);
                 }
             });
         }
@@ -284,27 +293,27 @@ public class GameSceneController implements Initializable {
             okButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent arg0) {
-                    dialogStage.close();
-                    clearBoard();
+                    clearBoard(dialogStage);
                 }
             });
 
             dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
-                    dialogStage.close();
-                    clearBoard();
+                    clearBoard(dialogStage);
                 }
             });
         }
     }
 
-    private void clearBoard() {
+    private void clearBoard(Stage dialogStage) {
+        dialogStage.close();
         this.vbox_messages.getChildren().clear();
         this.manageMyTurnIndicators(this.communicationHandler.getClientIsMyTurn());
     }
 
-    private void goToScoreStage(String scores) {
+    private void goToScoreStage(Stage dialogStage, String scores) {
+        dialogStage.close();
         String[] scoreArray = scores.split(";");
         loadScoreboardScene(scoreArray[0], Integer.valueOf(scoreArray[1]), scoreArray[2], Integer.valueOf(scoreArray[3]), communicationHandler.getClientUsername());
     }

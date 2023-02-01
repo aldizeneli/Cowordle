@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="- rinominato alcune classi&#10;- username accetta numeri&#10;- allineamento della logica dei catch&#10;- cambiato numero di porta del socket&#10;- piccoli refactoring vari">
+    <list default="true" id="18e596eb-80ca-4b0b-bfdb-ab208ec8c9d3" name="Changes" comment="- popolata la vocabulary&#10;- settato punteggio max a 5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/client/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/client/controllers/GameSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/handlers/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/handlers/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/resources/vocabulary.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/resources/vocabulary.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cowordle/server/utility/Vocabulary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cowordle/server/utility/Vocabulary.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,7 +296,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675206909115</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="- popolata la vocabulary&#10;- settato punteggio max a 5">
+      <created>1675208082855</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1675208082855</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -310,7 +318,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-risolto problema di interfaccia che non partiva dei client, era a causa di  client.sendMessage(); che non era un thread come  client.listenForMessage() ed essendo un operazione blocante necessitava di girare su un suo thread" />
     <MESSAGE value="-test aggiornamento ui client a seguito di messaggio da parte del server OK&#10;-aggiunta carte lette da file json&#10;-inizio gestione turno di gioco" />
     <MESSAGE value="-aggiunta check sul client invia messaggio solo se è il suo turno" />
     <MESSAGE value="-rimossi riferimenti a briscola&#10;-iniziato logica Wordle" />
@@ -335,7 +342,8 @@
     <MESSAGE value="-estratto da Server logica della partita e parte della comunicazione con i client &#10;-aggiunto punteggio sul client" />
     <MESSAGE value="- spostato classi da package shared a quello in cui sono usate&#10;- migliorata logica dei thread con rimozione dei timer e migliori exit conditions&#10;- aggiunte label per username e score nel game scene" />
     <MESSAGE value="- rinominato alcune classi&#10;- username accetta numeri&#10;- allineamento della logica dei catch&#10;- cambiato numero di porta del socket&#10;- piccoli refactoring vari" />
-    <option name="LAST_COMMIT_MESSAGE" value="- rinominato alcune classi&#10;- username accetta numeri&#10;- allineamento della logica dei catch&#10;- cambiato numero di porta del socket&#10;- piccoli refactoring vari" />
+    <MESSAGE value="- popolata la vocabulary&#10;- settato punteggio max a 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="- popolata la vocabulary&#10;- settato punteggio max a 5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

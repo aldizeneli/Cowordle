@@ -19,4 +19,6 @@ module app.briscola {
     opens app.cowordle.server.utility to javafx.fxml;
     exports app.cowordle.client.handlers;
     opens app.cowordle.client.handlers to javafx.fxml;
+    exports app.cowordle.client.models;
+    opens app.cowordle.client.models to javafx.fxml;
 }

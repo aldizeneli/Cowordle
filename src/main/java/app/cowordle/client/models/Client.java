@@ -1,4 +1,4 @@
-package app.cowordle.client;
+package app.cowordle.client.models;
 
 public class Client {
 

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -20,6 +21,8 @@ public class LoginSceneController {
 
     @FXML
     private TextField tf_username;
+    @FXML
+    private Label lbl_usernameValidation;
 
     //endregion
 
@@ -27,12 +30,20 @@ public class LoginSceneController {
 
     public void goToGameScene(ActionEvent event) {
         try {
+            lbl_usernameValidation.setText("Choose your username:");
+
             String inputUsername = this.tf_username.getText();
-            boolean isInvalidUsername = inputUsername == null
-                    || inputUsername.isEmpty()
-                    || !Pattern.compile("[a-zA-Z0-9]+").matcher(inputUsername).matches();
-            if(isInvalidUsername)
+
+            boolean isEmptyUsername = inputUsername == null || inputUsername.isEmpty();
+            boolean isInvalidUsername = !Pattern.compile("[a-zA-Z0-9]+").matcher(inputUsername).matches();
+
+            if(isEmptyUsername) {
+                lbl_usernameValidation.setText("The username can't be empty!");
                 return;
+            } else if (isInvalidUsername) {
+                lbl_usernameValidation.setText("The username can't contain special characters!");
+                return;
+            }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/board-view.fxml"));
             Parent root = loader.load();

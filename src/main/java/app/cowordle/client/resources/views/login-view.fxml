@@ -24,7 +24,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="602.0" prefHeight="20.0" prefWidth="173.0" text="Choose your username:">
+      <Label fx:id="lbl_usernameValidation" layoutX="38.0" layoutY="602.0" prefHeight="20.0" prefWidth="358.0" text="Choose your username:">
          <font>
             <Font size="14.0" />
          </font>

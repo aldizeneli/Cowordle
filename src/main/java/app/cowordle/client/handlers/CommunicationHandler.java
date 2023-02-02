@@ -1,7 +1,7 @@
 package app.cowordle.client.handlers;
 
 
-import app.cowordle.client.Client;
+import app.cowordle.client.models.Client;
 import app.cowordle.client.controllers.GameSceneController;
 import app.cowordle.shared.ActionType;
 import app.cowordle.shared.Message;
